@@ -1,0 +1,8 @@
+menus, modificar valores
+
+horas de reserva:  mostrar y cambiar estado (resercado-disponible) al hacer click, como menus
+pedidos: mostrar, aceptar(borrar y mover a historial como aceptado) o cancelar (mover a historial como cancelado)
+reservas: mostrar, aceptar(borrar y mover a historial como aceptado, cambiuar estado de la hora a reservado) o cancelar (mover a historial como cancelado)
+
+
+historial: diferente seccion para pedidos y reservas (diferenciando entre aceptados y cancelados)

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero Kanban</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/adminmain.css" type="text/css">
+</head>
+<body>
+    <div id="contenedorMensaje">
+        <form id="formMensaje">
+            <p id="mensaje"></p>
+            <button id="contMens">Continuar</button>
+        </form>
+    </div>
+<div class="container-fluid">
+    <div id="menu">
+        <div id="welcome" class="container"></div>
+        <div class="d-flex justify-content-evenly mb-3 pe-3 ps-3 pt-3 pb-3">
+            <button type="button" class="btn btn-success custom-padd" id="newIdea" data-bs-toggle="modal" data-bs-target="#nuevaIdea">Nuevo Menu</button>
+            <button type="button" class="btn btn-warning custom-padd" id="toggleAll">Todo</button>
+            <button type="button" class="btn btn-info custom-padd" id="verDeleted">Papelera</button>
+            <button type="button" class="btn btn-secondary custom-padd" id="verStats">Estadisticas</button>
+            <button type="button" class="btn btn-danger custom-padd" id="cerrarSesion">Salir</button>
+        </div>
+    </div>
+    
+    <div class="kanban-board">
+        <!-- Columna Idea -->
+        <div id="contIdea" class="kanban-column">
+            <div>
+                <button id="ideaButt" type="button" class="btn btn-primary">MENUS</button>
+            </div>
+            <div class="contIdeas">
+            </div>
+
+
+        </div>
+
+        <!-- Columna To Do -->
+        <div id="contTodo" class="kanban-column">
+            <div>
+                <button id="todoButt" type="button" class="btn btn-primary">HORAS DE RESERVA</button>
+            </div>
+            <div class="contTodos">
+                <div class="propias"></div>
+                <div class="colab"></div>
+            </div>
+
+        </div>
+
+        <!-- Columna Doing -->
+        <div id="contDoing" class="kanban-column">
+            <div>
+               <button id="doingButt" type="button" class="btn btn-primary">PEDIDOS</button> 
+            </div>
+            <div class="contDoings">
+                <div class="propias"></div>
+                <div class="colab"></div>
+            </div>
+
+        </div>
+
+        <!-- Columna Done -->
+        <div id="contDone" class="kanban-column">
+            <div>
+                <button id="doneButt" type="button" class="btn btn-primary">RESERVAS</button>
+            </div>
+            <div class="contDones">
+                <div class="propias"></div>
+                <div class="colab"></div>
+            </div>
+
+        </div>
+
+        <!-- Columna Papelera -->
+        <div id="contPapel" class="kanban-column ">
+            <div class="contPapels">
+                <div class="propias"></div>
+                <div class="colab"></div>
+            </div>
+
+        </div>
+
+        <!-- Columna Stats -->
+        <div id="contStat">
+            <div class="contStats">
+                <div class="propias"></div>
+                <div class="colab"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal nueva idea -->
+<div class="modal fade" id="nuevaIdea" tabindex="-1" aria-labelledby="nuevaIdeaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nuevaIdeaLabel">NUEVA IDEA</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formNuevaIdea">
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="nombreuser" name="nombreuser" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="idunicaproyecto" name="idunicaproyecto" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="estadoproyecto" name="estadoproyecto" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="fechacreacion" name="fechacreacion" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="fechaultmod" name="fechaultmod" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombreproyecto" class="form-label">Nombre del proyecto</label>
+                        <input type="text" class="form-control" id="nombreproyecto" name="nombreproyecto" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descrip" class="form-label">Breve descripcion</label>
+                        <input type="text" class="form-control" id="descrip" name="descrip" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notasproyecto" class="form-label">Notas</label>
+                        <input type="text" class="form-control" id="notasproyecto" name="notasproyecto" required>
+                    </div>
+                    <div id="listacolaboradores" class="mb-3">
+                        <label class="form-label">Colaboradores</label><br>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Registrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal tarjeta maximizada -->
+<div class="modal fade" id="tarjetaModal" tabindex="-1" role="dialog" aria-labelledby="tarjetaModalLabel" aria-hidden="true">
+    <div id="modalMaxi" class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="tarjeta-detalle">
+                    <h4 id="nombreProyectoM"></h4>
+                    <p id="creadorM"></p>
+                    <p id="estadoproyectoM"></p>
+                    <p id="descripcionM"></p>
+                    <p id="notasProyectoM"></p>
+                    <p id="fechaCreacionM"></p>
+                    <p id="fechaUltimaModificacionM"></p>
+                    <p id="tagColabs">Colaboradores:</p>
+                    <div id="colaboradoresM"></div>
+                    <div id="botoneraMax">
+                        <button id="modifTarj" type="button" class="btn btn-info">MODIFICAR</button>
+                        <button id="deleteTarj" type="button" class="btn btn-danger">ELIMINAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modificacionTarjeta">
+        <div class="modal-dialog">
+            <div id="contModifFull" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modificacionTarjetaLabel">Modificar</h5>
+                </div>
+                <div class="modal-body">
+
+                    <form id="formModif">
+
+                        <div class="mb-3">
+                            <label for="nombreproyectoMF" class="form-label">Nombre del proyecto: </label>
+                            <input type="text" class="form-control" id="nombreproyectoMF" name="nombreproyectoMF" required>
+                        </div>                        
+                        <div class="mb-3">
+                            <label for="descripMF" class="form-label">Descripcion: </label>
+                            <input type="text" class="form-control" id="descripMF" name="descripMF" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notasproyectoMF" class="form-label">Notas: </label>
+                            <input type="text" class="form-control" id="notasproyectoMF" name="notasproyectoMF" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estadoproyectoMF" class="form-label">Estado: </label>
+                            <select class="form-control" id="estadoproyectoMF" name="estadoproyectoMF" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechacreacionMF" class="form-label">Fecha de creacion: </label>
+                            <input type="text" class="form-control" id="fechacreacionMF" name="fechacreacionMF" required disabled>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fechaultmodMF" class="form-label">Fecha de ultima modificacion: </label>                            
+                            <input type="text" class="form-control" id="fechaultmodMF" name="fechaultmodMF" required disabled>
+                        </div>
+
+                        <div id="listacolaboradoresMF" class="mb-3">
+                            
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="hidden" class="form-control" id="nombreuserMF" name="nombreuserMF" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="hidden" class="form-control" id="idunicaproyectoMF" name="idunicaproyectoMF" required>
+                        </div>
+                        <div id="buttmodifS">
+                            <button id="cancelarModif" type="button" class="btn btn-warning w-50">CANCELAR</button>
+                        <button type="submit" class="btn btn-info w-50">MODIFICAR</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="../js/adminmain.js"></script>
+</body>
+</html>
