@@ -94,46 +94,35 @@
 
     </div>
 </div>
-
-<!-- Modal nueva idea -->
+<!-- Modal nueva idea (menu) -->
 <div class="modal fade" id="nuevaIdea" tabindex="-1" aria-labelledby="nuevaIdeaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="nuevaIdeaLabel">NUEVA IDEA</h5>
+                <h5 class="modal-title" id="nuevaIdeaLabel">NUEVO MENU</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="formNuevaIdea">
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="nombreuser" name="nombreuser" required>
+                        <label for="titulo" class="form-label">Descripcion</label>
+                        <input type="text" class="form-control" id="titulo" name="titulo" required>
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="idunicaproyecto" name="idunicaproyecto" required>
+                        <label for="primero" class="form-label">Primer plato</label>
+                        <input type="text" class="form-control" id="primero" name="primero" required>
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="estadoproyecto" name="estadoproyecto" required>
+                        <label for="segundo" class="form-label">Segundo plato</label>
+                        <input type="text" class="form-control" id="segundo" name="segundo" required>
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="fechacreacion" name="fechacreacion" required>
+                        <label for="postre" class="form-label">Postre</label>
+                        <input type="text" class="form-control" id="postre" name="postre" required>
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" class="form-control" id="fechaultmod" name="fechaultmod" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="nombreproyecto" class="form-label">Nombre del proyecto</label>
-                        <input type="text" class="form-control" id="nombreproyecto" name="nombreproyecto" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="descrip" class="form-label">Breve descripcion</label>
-                        <input type="text" class="form-control" id="descrip" name="descrip" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="notasproyecto" class="form-label">Notas</label>
-                        <input type="text" class="form-control" id="notasproyecto" name="notasproyecto" required>
-                    </div>
-                    <div id="listacolaboradores" class="mb-3">
-                        <label class="form-label">Colaboradores</label><br>
+                        <label for="bebida" class="form-label">Bebidas</label>
+                        <input type="text" class="form-control" id="bebida" name="bebida" required>
                     </div>
                     <button type="submit" class="btn btn-primary w-100">Registrar</button>
                 </form>

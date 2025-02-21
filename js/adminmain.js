@@ -408,34 +408,27 @@ $(document).ready(async function(){
     */
     
     $('#formNuevaIdea').submit(function(e) {    // envio de nueva idea a bbdd
-        e.preventDefault();        
+        e.preventDefault();
+        console.log($(this).serialize());
         $.ajax({
             type: 'POST',
-            url: '../php/nuevaIdea.php',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/nuevoMenu',
             data: $(this).serialize(),
             success: function(response) {
-                console.log(response);
-                updateNombreContSession();
-                
-                if(response=='YESYESYES'){
-                    $('#nuevaIdea').modal('hide');
-                    resetInputsNuevaIdea();
-                    borrarContenedor("Idea");
-                    borrarContenedor("Todo");
-                    borrarContenedor("Doing");
-                    borrarContenedor("Done");
-                    estadoBotonIdea=false;
-                    estadoBotonTodo=false;  
-                    estadoBotonDoing=false;
-                    estadoBotonDone=false; 
-                    mensaje("Nueva idea creada");
+                console.log(response);                
 
-                }else{
-                    $('#nuevaIdea').modal('hide');
-                    resetInputsNuevaIdea();
-                    mensaje("Error en la creacion de nueva idea");
-                }
-                
+                $('#nuevaIdea').modal('hide');
+                resetInputsNuevaIdea();
+                borrarContenedor("Idea");
+                borrarContenedor("Todo");
+                borrarContenedor("Doing");
+                borrarContenedor("Done");
+                estadoBotonIdea=false;
+                estadoBotonTodo=false;  
+                estadoBotonDoing=false;
+                estadoBotonDone=false; 
+                mensaje("Nueva idea creada");
+  
             },
             error: function(xhr, status, error) {
                 $('#result').html('<p>An error ocurred: ' + error + '</p>');
@@ -470,16 +463,6 @@ $(document).ready(async function(){
                 $('#result').html('<p>An error ocurred: ' + error + '</p>');
             }
         });
-    });
-
-    $('#newIdea').on('click', function(){   // funcionalidad boton nueva idea
-        let fecha=new Date().toISOString();
-        $('#formNuevaIdea .mb-3 #nombreuser.form-control').val(nombreUserActual);
-        $('#formNuevaIdea .mb-3 #idunicaproyecto.form-control').val(nombreUserActual+contadorUserActual);
-        $('#formNuevaIdea .mb-3 #estadoproyecto.form-control').val('idea');
-        $('#formNuevaIdea .mb-3 #fechacreacion.form-control').val(fecha);
-        $('#formNuevaIdea .mb-3 #fechaultmod.form-control').val('/');
-        
     });
     
     $('#ideaButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar tareas, estado idea
