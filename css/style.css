@@ -245,11 +245,15 @@ p, li {
     text-align: center;
 }
 
+.toto{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 /* Estilo para el botón de cerrar */
 .close {
-    position: absolute;
-    top: 2%;
-    left: 13%;
+   
     color: #8c7d6d;
     font-size: 40px;
     font-weight: bold;
