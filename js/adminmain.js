@@ -408,12 +408,17 @@ $(document).ready(async function(){
     */
     
     $('#formNuevaIdea').submit(function(e) {    // envio de nueva idea a bbdd
+        let titulo = $('#titulo').val();
+        let primero = $('#primero').val();
+        let segundo = $('#segundo').val();
+        let postre = $('#postre').val();
+        let bebida = $('#bebida').val();
         e.preventDefault();
         console.log($(this).serialize());
         $.ajax({
             type: 'POST',
             url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/nuevoMenu',
-            data: $(this).serialize(),
+            data: {"titulo":titulo,"primero":primero,"segundo":segundo,"postre":postre,"bebida":bebida},
             success: function(response) {
                 console.log(response);                
 
