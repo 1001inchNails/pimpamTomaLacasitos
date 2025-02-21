@@ -413,12 +413,19 @@ $(document).ready(async function(){
         let segundo = $('#segundo').val();
         let postre = $('#postre').val();
         let bebida = $('#bebida').val();
+        console.log(titulo,primero,segundo,postre,bebida);
         e.preventDefault();
-        console.log($(this).serialize());
         $.ajax({
             type: 'POST',
             url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/nuevoMenu',
-            data: {"titulo":titulo,"primero":primero,"segundo":segundo,"postre":postre,"bebida":bebida},
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "titulo": titulo,
+                "primero": primero,
+                "segundo": segundo,
+                "postre": postre,
+                "bebida": bebida
+            }),
             success: function(response) {
                 console.log(response);                
 

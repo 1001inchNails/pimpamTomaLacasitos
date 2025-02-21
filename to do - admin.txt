@@ -1,4 +1,4 @@
-menus, modificar valores
+menus, modificar valores ****************************************
 
 horas de reserva:  mostrar y cambiar estado (resercado-disponible) al hacer click, como menus
 pedidos: mostrar, aceptar(borrar y mover a historial como aceptado) o cancelar (mover a historial como cancelado)
