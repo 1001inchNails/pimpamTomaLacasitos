@@ -3,38 +3,75 @@ body{
     padding: 0;
     height: 100vh;
     background-color: #f9f9f9;
+    font-family: 'Merriweather', serif; /* Para los párrafos */
 }
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+   
+    text-transform: uppercase; /* Esto da un toque de elegancia */
+}
+
+/* Texto normal */
+p, li {
+    font-family: 'Merriweather', serif;
+}
+/* Estilo base para el menú */
 .menu {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    background-color: #ffffff; /* Color de fondo opcional */
-    border: 1px solid red;
+    align-items: center;
+    background-color: #1a1a1a; 
+    color: #fff;
+    border-bottom: 1px solid #8c7d6d;
+    padding: 1%;
 }
 
-.menu img{
-    width: 120px;
-}
-/* Estilo para la sección del logo */
-.logo{
-    padding-left: 1%;
+.menu .logo img {
+    width: 100px;   
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para los enlaces */
 .menu .paginas {
     display: flex;
-    gap: 20px; 
-}
-
-.paginas{
-    padding-right: 5%;
+    gap: 25px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .menu .paginas a {
     text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    transition: color 0.3s ease;
+    color: #fff;
+}
+
+.menu .paginas a:hover {
+    color: #be9e73;
+    border-bottom: 2px solid #be9e73;
+}
+
+
+/* Estilo para el botón de Admin */
+.boton .admin-btn {
+    background-color: #8c7d6d;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+}
+
+.boton .admin-btn:hover {
+    background-color: #ffffff;
+    transform: scale(1.05); /* Le da un ligero aumento al pasar el mouse */
+}
+
+.boton .admin-btn:active {
+    background-color: #a88f68;
 }
 
 .bienvenida {
@@ -170,13 +207,11 @@ body{
 }
 
 .contacto .reservar-btn:hover {
-    background-color: #c5b299; /* Un dorado más intenso */
+    background-color: #be9e73; /* Un dorado más intenso */
     transform: translateY(-5px);
 }
 
-.contacto .reservar-btn:active {
-    background-color: #a88f68; /* Un dorado oscuro */
-}
+    
 
 
 
