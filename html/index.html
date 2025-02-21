@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400&display=swap"
+        rel="stylesheet">
 
 </head>
+
 <body>
     <nav class="menu">
         <section class="logo">
@@ -16,12 +20,14 @@
         <section class="paginas">
             <a href="clientPedidos.html">Pedidos</a>
             <a href="clientReservas.html">Reservas</a>
+
+
             <section class="boton">
-                <a href="admin.html" class="admin-btn">Admin</a>
+                <button class="admin-btn">Admin</button>
             </section>
         </section>
     </nav>
-    
+
 
     <section class="bienvenida">
 
@@ -37,13 +43,13 @@
                 <h4>Filete Wagyu</h4>
                 <p>Corte premium acompañado de vegetales glaseados.</p>
             </section>
-    
+
             <section class="plato">
                 <img src="../img/risoto.png" alt="Risotto de Trufa">
                 <h4>Risotto de Trufa</h4>
                 <p>Risotto cremoso con esencia de trufa negra.</p>
             </section>
-    
+
             <section class="plato">
                 <img src="../img/tarta.jpg" alt="Cheesecake de Frambuesa">
                 <h4>Cheesecake de Frambuesa</h4>
@@ -58,6 +64,22 @@
         <p>Email: contacto@aurumrestaurante.com</p>
         <a class="reservar-btn" href="clientReservas.html">Reservar Ahora</a>
     </section>
-    
+
+    <!-- MODAL OCULTO-->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <button id="closeBtn" class="close">&times;</button>
+            <h2>Acceso Admin</h2>
+            <form>
+                <input type="text" placeholder="Nombre de usuario" required>
+                <input type="password" placeholder="Contraseña" required>
+                <button type="submit">Iniciar sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/js.js"></script>
 </body>
+
 </html>
