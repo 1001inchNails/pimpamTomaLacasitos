@@ -94,10 +94,9 @@ p, li {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4); /* Sutil oscurecimiento */
-    z-index: 0;
+    background: rgba(0, 0, 0, 0.2); /* Sutil oscurecimiento */
 }
-
+/*asdasd*/
 .bienvenida h2 {
     font-size: 50px;
     margin: 0;
