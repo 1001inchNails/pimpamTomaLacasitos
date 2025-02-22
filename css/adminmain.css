@@ -141,6 +141,18 @@
     .fondo2{
     background-color: rgb(110, 141, 177);
     }
+    .fondoMenus{
+        background-color: rgb(66, 71, 77);
+        }
+        .fondoHoras{
+            background-color: rgb(116, 70, 52);
+            }
+            .fondoPedidos{
+                background-color: rgb(177, 110, 157);
+                }
+                .fondoReservas{
+                    background-color: rgb(177, 167, 110);
+                    }
     html body div.container-fluid div.kanban-board div#contStat div.contStats div.colab p,html body div.container-fluid div.kanban-board div#contStat div.contStats div.propias p{
     font-size: 30px;
     }
@@ -188,9 +200,20 @@
     #ideaButt,#todoButt,#doingButt,#doneButt{
     width: 100%;
     padding: 10px;
-    background-color: #384fb4;
     border: none;
     }
+    #ideaButt{
+        background-color: rgb(66, 71, 77);
+        }
+        #todoButt{
+            background-color: rgb(116, 70, 52);
+            }
+            #doingButt{
+                background-color: rgb(177, 110, 157);
+                }
+                #doneButt{
+                    background-color: rgb(177, 167, 110);
+                    }
     #ideaButt:hover,#todoButt:hover,#doingButt:hover,#doneButt:hover{
     background-color: #586dc9;
     }
@@ -302,24 +325,51 @@
     display: none;
     flex-direction: column;
     }
-    #contPapel .contPapels .propias{
+    #contPapel .historialMenus{
     display: flex;
     flex-direction: row;
     gap: 30px;
     padding: 10px;
     }
-    #contPapel .contPapels .colab{
+    #contPapel .historialPedidos{
     display: flex;
     flex-direction: row;
     gap: 30px;
     padding: 10px;
     }
-    html body div.container-fluid div.kanban-board div#contPapel.kanban-column div.contPapels div.propias .tarjeta{
-    width: 300px;
-    }
-    html body div.container-fluid div.kanban-board div#contPapel.kanban-column div.contPapels div.colab .tarjeta{
-    width: 300px;
-    }
+    #contPapel .historialReservas{
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        padding: 10px;
+        }
+html body div.container-fluid div.kanban-board div#contPapel.kanban-column div.historialMenus .tarjetaA{
+width: 300px;
+font-size: 25px;
+font-weight: normal;
+display: flex;
+flex-direction: column;
+gap: 20px;
+padding: 10px;
+}
+html body div.container-fluid div.kanban-board div#contPapel.kanban-column div.historialPedidos .tarjetaPP{
+width: 300px;
+font-size: 25px;
+font-weight: normal;
+display: flex;
+flex-direction: column;
+gap: 20px;
+padding: 10px;
+}
+html body div.container-fluid div.kanban-board div#contPapel.kanban-column div.historialReservas .tarjetaRR{
+width: 300px;
+font-size: 25px;
+font-weight: normal;
+display: flex;
+flex-direction: column;
+gap: 20px;
+padding: 10px;
+}
     #contStat{
     display: none;
     flex-direction: row;

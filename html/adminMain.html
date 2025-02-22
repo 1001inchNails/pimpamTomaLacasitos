@@ -20,8 +20,7 @@
         <div class="d-flex justify-content-evenly mb-3 pe-3 ps-3 pt-3 pb-3">
             <button type="button" class="btn btn-success custom-padd" id="newIdea" data-bs-toggle="modal" data-bs-target="#nuevaIdea">Nuevo Menu</button>
             <button type="button" class="btn btn-warning custom-padd" id="toggleAll">Todo</button>
-            <button type="button" class="btn btn-info custom-padd" id="verDeleted">Papelera</button>
-            <button type="button" class="btn btn-secondary custom-padd" id="verStats">Estadisticas</button>
+            <button type="button" class="btn btn-info custom-padd" id="verDeleted">Historial</button>
             <button type="button" class="btn btn-danger custom-padd" id="cerrarSesion">Salir</button>
         </div>
     </div>
@@ -66,20 +65,9 @@
 
         <!-- Columna Papelera -->
         <div id="contPapel" class="kanban-column ">
-            <div class="contPapels">
-                <div class="propias"></div>
-                <div class="colab"></div>
-            </div>
-
-        </div>
-
-        <!-- Columna Stats -->
-        <div id="contStat">
-            <div class="contStats">
-                <div class="propias"></div>
-                <div class="colab"></div>
-            </div>
-
+                <div class="historialMenus"></div>
+                <div class="historialPedidos"></div>
+                <div class="historialReservas"></div>
         </div>
 
     </div>

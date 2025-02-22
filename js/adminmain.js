@@ -147,6 +147,95 @@ $(document).ready(async function(){
         });
     }
 
+    async function cargarHistorial() {
+        await $.ajax({    
+            type: 'GET',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/histmenus',
+            data: '',
+            success: function(response) {
+                //console.log(response);
+                let contadorTarj=0;
+                response.forEach(function(obj){
+                    $(`#contPapel .historialMenus`).append(`
+                        <div id="menu${contadorTarj}" class="tarjetaA">
+                        <p name="tarjidunica">Id: ${obj.id}</p>
+                        <p name="titulo">Descripcion: ${obj.titulo}</p>
+                        <p name="primero">Primero: ${obj.primero}</p>
+                        <p name="segundo">Segundo: ${obj.segundo}</p>
+                        <p name="postre">Postre: ${obj.postre}</p>
+                        <p name="bebida">Bebida: ${obj.bebida}</p>
+                        </div>
+                        `);
+
+                    $(`#menu${contadorTarj}`).addClass('fondoMenus');
+
+                    contadorTarj++;
+                });
+                contadorTarj=0;
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>Error: ' + error + '</p>');
+            }
+        });
+        await $.ajax({    
+            type: 'GET',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/histpedidos',
+            data: '',
+            success: function(response) {
+                response = response.sort((a, b) => a.id - b.id);
+                //console.log(response);
+                let contadorTarj=0;
+                response.forEach(function(obj){
+                    $(`#contPapel .historialPedidos`).append(`
+                        <div id="pedido${contadorTarj}" class="tarjetaPP">
+                        <p name="tarjidunica">Id: ${obj.id}</p>
+                        <p name="idpedido">Id del menu deseado: ${obj.idPedido}</p>
+                        <p name="ccp">Codigo Personal CLiente: ${obj.codigoClientePersonal}</p>
+                        <p name="estado">Estado: ${obj.estado}</p>
+                        </div>
+                        `);
+
+                    $(`#pedido${contadorTarj}`).addClass('fondoPedidos');
+
+                    contadorTarj++;
+                });
+                contadorTarj=0;
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>Error: ' + error + '</p>');
+            }
+        });
+        await $.ajax({    
+            type: 'GET',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/histreservas',
+            data: '',
+            success: function(response) {
+                response = response.sort((a, b) => a.id - b.id);
+                //console.log(response);
+                let contadorTarj=0;
+                response.forEach(function(obj){
+                    $(`#contPapel .historialReservas`).append(`
+                        <div id="reserva${contadorTarj}" class="tarjetaRR">
+                        <p name="tarjidunica">Id: ${obj.id}</p>
+                        <p name="tarjidunica">Hora Reserva: ${obj.horaReserva}</p>
+                        <p name="tarjidunica">Codigo Personal Cliente: ${obj.codigoClientePersonal}</p>
+                        <p name="estado">Estado: ${obj.estado}</p>
+                        </div>
+                        `);
+
+                    $(`#reserva${contadorTarj}`).addClass('fondoReservas');
+
+                    contadorTarj++;
+                });
+                contadorTarj=0;
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>Error: ' + error + '</p>');
+            }
+        });
+        
+    }
+
     function borrarContenedor(tipo) { // vaciado de contenedores segun tipo
         $(`#cont${tipo} .cont${tipo}s`).empty();
     }
@@ -636,7 +725,7 @@ $(document).ready(async function(){
     }
     */
     
-    $('#formNuevaIdea').submit(function(e) {    // envio de nueva idea a bbdd
+    $('#formNuevaIdea').submit(function(e) {    // envio de nuevo menu a bbdd
         let titulo = $('#titulo').val();
         let primero = $('#primero').val();
         let segundo = $('#segundo').val();
@@ -668,7 +757,7 @@ $(document).ready(async function(){
                 estadoBotonTodo=false;  
                 estadoBotonDoing=false;
                 estadoBotonDone=false; 
-                mensaje("Nueva idea creada");
+                mensaje("Nuevo menu creado");
   
             },
             error: function(xhr, status, error) {
@@ -777,27 +866,27 @@ $(document).ready(async function(){
         }
         else if(estadoBotonIdea || estadoBotonTodo || estadoBotonDoing || estadoBotonDone){ // si alguno de ellos tiene tarjetas, comprueba los que falten
             if(!estadoBotonIdea){
-                cargarTarjetas("idea","Idea");
+                cargarMenus();
                 estadoBotonIdea=true;
             }
             if(!estadoBotonTodo){
-                cargarTarjetas("todo","Todo");
+                cargarHorasReserva();
                 estadoBotonTodo=true;
             }
             if(!estadoBotonDoing){
-                cargarTarjetas("doing","Doing");
+                cargarPedidos();
                 estadoBotonDoing=true;
             }
             if(!estadoBotonDone){
-                cargarTarjetas("done","Done");
+                cargarReservas();
                 estadoBotonDone=true;
             }
         }
         else{   // si faltan todos, muestra todos
-            cargarTarjetas("idea","Idea");
-            cargarTarjetas("todo","Todo");
-            cargarTarjetas("doing","Doing");
-            cargarTarjetas("done","Done");
+            cargarMenus();
+            cargarHorasReserva();
+            cargarPedidos();
+            cargarReservas();
             estadoBotonAll=true;
             estadoBotonIdea=true;
             estadoBotonTodo=true;
@@ -815,90 +904,33 @@ $(document).ready(async function(){
             $('#contDone').css('display','flex');
             $('#contPapel').css('display','none');
             estadoBotonPapelera=false;
-            borrarContenedor("Papel");
+            $(`#contPapel .historialMenus`).empty();
+            $(`#contPapel .historialPedidos`).empty();
+            $(`#contPapel .historialReservas`).empty();
             $('#newIdea').css('visibility','visible');
             $('#toggleAll').css('visibility','visible');
             $('#cerrarSesion').css('visibility','visible');
-            $('#verStats').css('visibility','visible');
         }else{            
             $('#contIdea').css('display','none');
             $('#contTodo').css('display','none');
             $('#contDoing').css('display','none');
             $('#contDone').css('display','none');
             $('#contPapel').css('display','flex');
+            borrarContenedor("Idea");
+            borrarContenedor("Todo");
+            borrarContenedor("Doing");
+            borrarContenedor("Done");
+            estadoBotonAll=false;
+            estadoBotonIdea=false;
+            estadoBotonTodo=false;
+            estadoBotonDoing=false;
+            estadoBotonDone=false; 
             estadoBotonPapelera=true;
-            cargarTarjetas("all","Papel");
+            cargarHistorial();
             $('#newIdea').css('visibility','hidden');
             $('#toggleAll').css('visibility','hidden');
             $('#cerrarSesion').css('visibility','hidden');
-            $('#verStats').css('visibility','hidden');
         }
         
-    });
-
-    $('#verStats').on('click',async function(){
-        if(estadoBotonStats){
-            $('#contIdea').css('display','flex');
-            $('#contTodo').css('display','flex');
-            $('#contDoing').css('display','flex');
-            $('#contDone').css('display','flex');
-            $('#contStat').css('display','none');
-            estadoBotonStats=false;
-            borrarContenedor("Stat");
-            $('#newIdea').css('visibility','visible');
-            $('#toggleAll').css('visibility','visible');
-            $('#cerrarSesion').css('visibility','visible');
-            $('#verDeleted').css('visibility','visible');
-        }else{            
-            $('#contIdea').css('display','none');
-            $('#contTodo').css('display','none');
-            $('#contDoing').css('display','none');
-            $('#contDone').css('display','none');
-            $('#contStat').css('display','flex');
-            estadoBotonStats=true;
-            $('#newIdea').css('visibility','hidden');
-            $('#toggleAll').css('visibility','hidden');
-            $('#cerrarSesion').css('visibility','hidden');
-            $('#verDeleted').css('visibility','hidden');
-            await $.ajax({    
-                type: 'POST',
-                url: '../php/verStats.php',
-                data:'',
-                success: function(response) {
-                    response=JSON.parse(response);
-                    //console.log(response);
-                    let tituloupper=nombreUserActual.toUpperCase();
-                    $('#contStat .contStats .propias').append(`
-                        <h1>${tituloupper}</h1>
-                        <p>Total: ${response.proyectosCreadosPorUser}</p>
-                        <p>Ideas: ${response.proyectosIdeaPorUser}</p>
-                        <p>To Dos: ${response.proyectosToDoPorUser}</p>
-                        <p>Doings: ${response.proyectosDoingPorUser}</p>
-                        <p>Dones: ${response.proyectosDonePorUser}</p>
-                        <p>Total eliminados: ${response.proyectosEliminadosporUser}</p>
-                        <p>Ideas eliminadas: ${response.proyectosEliminadosIdeaUser}</p>
-                        <p>To Dos eliminados: ${response.proyectosEliminadosToDOUser}</p>
-                        <p>Doings eliminados: ${response.proyectosEliminadosDoingUser}</p>
-                        <p>Dones eliminados: ${response.proyectosEliminadosDoneUser}</p>
-                        `)
-                        $('#contStat .contStats .colab').append(`
-                            <h1>TOTAL</h1>
-                            <p>Total Proyectos creados: ${response.proyectosCreadosTotal}</p>
-                            <p>Total Ideas: ${response.proyectosIdeaTotal}</p>
-                            <p>Total To Dos: ${response.proyectosToDoTotal}</p>
-                            <p>Total Doings: ${response.proyectosDoingTotal}</p>
-                            <p>Total Dones: ${response.proyectosDoneTotal}</p>
-                            <p>Total proyectos eliminados: ${response.proyectosEliminadosTotal}</p>
-                            <p>Total Ideas eliminadas: ${response.proyectosEliminadosIdea}</p>
-                            <p>Total To Dos eliminados: ${response.proyectosEliminadosToDO}</p>
-                            <p>Total Doings eliminados: ${response.proyectosEliminadosDoing}</p>
-                            <p>Total Dones eliminados: ${response.proyectosEliminadosDone}</p>
-                            `)
-                },
-                error: function(xhr, status, error) {
-                    $('#result').html('<p>An error ocurred: ' + error + '</p>');
-                }
-            });
-        }
     });
 });
