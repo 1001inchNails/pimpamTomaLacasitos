@@ -57,10 +57,6 @@ $(document).ready(async function(){
                         <input class="tarjbebida" type="hidden" name="bebida" value="${obj.bebida}">
                         <p name="tarjidunica">Id: ${obj.id}</p>
                         <p name="titulo">Descripcion: ${obj.titulo}</p>
-                        <p name="primero">Primer plato: ${obj.primero}</p>
-                        <p name="segundo">Segundo plato: ${obj.segundo}</p>
-                        <p name="postre">Postre: ${obj.postre}</p>
-                        <p name="bebida">Bebida: ${obj.bebida}</p>
                         </div>
                         `);
 
@@ -74,62 +70,6 @@ $(document).ready(async function(){
                 $('#result').html('<p>Error: ' + error + '</p>');
             }
         });
-    }
-
-    async function cargarTarjetas(tipo,prefijoSelector) {   // carga de tarjetas segun tipo
-        await $.ajax({    
-            type: 'POST',
-            url: '../php/cargarTarjetas.php',
-            data: {"estadoproyecto":tipo},
-            success: function(response) {
-                response=JSON.parse(response);
-                console.log(response);
-                let contadorTarj=0;
-                response.forEach(function(obj){
-                    let propiaOcolab;
-                    if(checkAutoriaTarjeta(obj.nombreuser)){
-                        propiaOcolab='propias';
-                    }else{
-                        propiaOcolab='colab';
-                    }
-                    let tituloupper=obj.nombreproyecto.toUpperCase();
-                    $(`#cont${prefijoSelector} .cont${prefijoSelector}s .${propiaOcolab}`).append(`
-                        <div id="${tipo}tarj${contadorTarj}" class="tarjeta">
-                        <input class="tarjnombreuser" type="hidden" name="nombreuser" value="${obj.nombreuser}">
-                        <input class="tarjidunicaproyecto" type="hidden" name="idunicaproyecto" value="${obj.idunicaproyecto}">
-                        <input class="tarjestadoproyecto" type="hidden" name="estadoproyecto" value="${obj.estadoproyecto}">
-                        <input class="tarjnombreproyecto" type="hidden" name="nombreproyecto" value="${obj.nombreproyecto}">
-                        <input class="tarjdescrip" type="hidden" name="descrip" value="${obj.descrip}">
-                        <input class="tarjnotasproyecto" type="hidden" name="notasproyecto" value="${obj.notasproyecto}">
-                        <input class="tarjfechacreacion" type="hidden" name="fechacreacion" value="${obj.fechacreacion}">
-                        <input class="tarjfechaultmod" type="hidden" name="fechaultmod" value="${obj.fechaultmod}">
-                        <p name="nombreproyecto">${tituloupper}</p>
-                        <p name="nombreuser">Autor: ${obj.nombreuser}</p>
-                        <p name="descrip">${obj.descrip}</p>
-                        </div>
-                        `);
-                    obj.colaboradores.forEach(function(nombr){                        
-                        $(`#${tipo}tarj${contadorTarj}`).append(`
-                            <input class="tarjcolaborador" type="hidden" name="${nombr}" value=${nombr}>
-                            `);
-                    });
-                    if(checkAutoriaTarjeta(obj.nombreuser)){// cambia background segun sean de creador o de colaborador
-
-                        $(`#${tipo}tarj${contadorTarj}`).addClass('fondo1');
-                        $(`#${tipo}tarj${contadorTarj} p[name="nombreuser"]`).hide(); // no hace falta, el fondo1 ya indica autoria propia
-                        
-                    }else{                        
-                        $(`#${tipo}tarj${contadorTarj}`).addClass('fondo2');
-                    }
-                    contadorTarj++;
-                });
-                contadorTarj=0;
-            },
-            error: function(xhr, status, error) {
-                $('#result').html('<p>Error: ' + error + '</p>');
-            }
-        });
-        checkearsiHayPropias(); // para que cuando no hay proyectos propios no deje ese pequeño espacio del div vacio
     }
 
     function borrarContenedor(tipo) { // vaciado de contenedores segun tipo
@@ -157,195 +97,76 @@ $(document).ready(async function(){
     let tarjetaActual;  // guardar datos de tarjeta actual para usar en el formulario de modificacion
     let idActualProyecto;
 
-    $(document).on('click', '.tarjeta', function() { // para mostrar las tarjetas maximizadas
-        $('#botoneraMax').css('display','none');    // por defecto, oculto
-        $('#colaboradoresM').css('display','flex');    // por defecto, visible
-        $('#tagColabs').css('display','flex');    // por defecto, visible
+    $(document).on('click', '.tarjeta', function() { // para mostrar las tarjetas maximizadas (menus)
+        $('#botoneraMax').css('display','flex');    // por defecto, oculto
         let tarjeta=$(this);    
         let datosTarjeta={
-            nombreuser: tarjeta.find('.tarjnombreuser').attr('value'),
-            idunicaproyecto: tarjeta.find('.tarjidunicaproyecto').attr('value'),
-            estadoproyecto: tarjeta.find('.tarjestadoproyecto').attr('value'),
-            nombreproyecto: tarjeta.find('.tarjnombreproyecto').attr('value'),
-            descrip: tarjeta.find('.tarjdescrip').attr('value'),
-            notasproyecto: tarjeta.find('.tarjnotasproyecto').attr('value'),
-            fechacreacion: tarjeta.find('.tarjfechacreacion').attr('value'),
-            fechaultmod: tarjeta.find('.tarjfechaultmod').attr('value')
+            tarjidunica: tarjeta.find('.tarjidunica').attr('value'),
+            tarjtitulo: tarjeta.find('.tarjtitulo').attr('value'),
+            tarjprimero: tarjeta.find('.tarjprimero').attr('value'),
+            tarjsegundo: tarjeta.find('.tarjsegundo').attr('value'),
+            tarjpostre: tarjeta.find('.tarjpostre').attr('value'),
+            tarjbebida: tarjeta.find('.tarjbebida').attr('value')
         };
-        idActualProyecto=datosTarjeta.idunicaproyecto;
-        $('#nombreProyectoM').text('Proyecto: ' + datosTarjeta.nombreproyecto);
-        $('#creadorM').text('Autor: ' + datosTarjeta.nombreuser);
-        $('#descripcionM').text('Descripcion: ' + datosTarjeta.descrip);
-        $('#estadoproyectoM').text('Estado: ' + datosTarjeta.estadoproyecto);
-        $('#notasProyectoM').text('Notas: ' + datosTarjeta.notasproyecto);
-        $('#fechaCreacionM').text('Fecha de creación: ' + datosTarjeta.fechacreacion);
-        $('#fechaUltimaModificacionM').text('Última modificación: ' + datosTarjeta.fechaultmod);
+        idActualProyecto=datosTarjeta.tarjidunica;
+        $('#idM').text('Id: ' + datosTarjeta.tarjidunica);
+        $('#tarjtituloM').text('Descripcion: : ' + datosTarjeta.tarjtitulo);
+        $('#primeroM').text('Primero: ' + datosTarjeta.tarjprimero);
+        $('#segundoM').text('Segundo: ' + datosTarjeta.tarjsegundo);
+        $('#postreM').text('Postre: ' + datosTarjeta.tarjpostre);
+        $('#bebidasM').text('Bebidas: ' + datosTarjeta.tarjbebida);
         
-        // limpiar y actualizar colaboradores
-        $('#colaboradoresM').empty();
-        let listaColabs=[];
-        let colaboradores = tarjeta.find('.tarjcolaborador');
-        colaboradores.each(function() {
-            $('#colaboradoresM').append(
-                `<p> • ${$(this).val()}</p>`                
-            );
-            listaColabs.push($(this).val());
-        });
-        tarjetaActual=[datosTarjeta,listaColabs];  // guardar datos de tarjeta actual para usar en el formulario de modificacion
 
-        if(listaColabs.length==0){  // ocultar si no hay ninguno, duh
-            $('#colaboradoresM').css('display','none');
-            $('#tagColabs').css('display','none'); 
-        }
-
-        if(checkAutoriaTarjeta(datosTarjeta.nombreuser)){
-            $('#botoneraMax').css('display','flex');
-        }
-        
-        if(estadoBotonPapelera){
-            $('#botoneraMax').css('display','none');
-        }
-        else if(!estadoBotonPapelera  && datosTarjeta.nombreuser==nombreUserActual)
-            {
-            $('#botoneraMax').css('display','flex');
-        }
+        tarjetaActual=[datosTarjeta];  // guardar datos de tarjeta actual para usar en el formulario de modificacion
 
         $('#tarjetaModal').modal('show');
     });
 
-    $(document).on('click', '#modifTarj',async function(){   // proceso de formulario de modificacion
+    $(document).on('click', '#modifTarj',async function(){   // proceso de formulario de modificacion (tarjeta menus)
         $('#modalMaxi').css('display','none');
         $('#modificacionTarjeta').css('display','flex');
 
         
-        $('#nombreproyectoMF').val(tarjetaActual[0].nombreproyecto);
-        $('#idunicaproyectoMF').val(tarjetaActual[0].idunicaproyecto);
-        $('#nombreuserMF').val(tarjetaActual[0].nombreuser);
-        $('#descripMF').val(tarjetaActual[0].descrip);
-        $('#notasproyectoMF').val(tarjetaActual[0].notasproyecto);
-        $('#fechacreacionMF').val(tarjetaActual[0].fechacreacion);
-        $('#fechaultmodMF').val(new Date().toISOString());
-        let estadoActual=tarjetaActual[0].estadoproyecto;
-        switch(estadoActual){   // asignacion de options al select de estado
-            case 'idea':
-                $("#estadoproyectoMF")[0].selectedIndex=0;
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'idea',
-                    text: 'Idea'
-                }));
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'todo',
-                    text: 'To Do'
-                }));
-                break;
-            case 'todo':
-                $("#estadoproyectoMF")[0].selectedIndex=0;
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'todo',
-                    text: 'To Do'
-                }));
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'doing',
-                    text: 'Doing'
-                }));
-                break;
-            case 'doing':
-                $("#estadoproyectoMF")[0].selectedIndex=0;
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'doing',
-                    text: 'Doing'
-                }));
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'todo',
-                    text: 'To Do'
-                }));
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'done',
-                    text: 'Done'
-                }));
-                break;
-            case 'done':
-                $("#estadoproyectoMF")[0].selectedIndex=0;
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'done',
-                    text: 'Done'
-                }));
-                $('#estadoproyectoMF').append($('<option>', {
-                    value: 'doing',
-                    text: 'Doing'
-                }));
-                break;
-        }
-        await $.ajax({    // mete lista de colaboradores para los checks, los que estaban antes aparecen marcados por defecto
-            url: '../php/devolverlistacolaboradores.php',
-            data: '',
-            success: function(response) {
-                response=JSON.parse(response);
-                let marked=false;
-                if(response.length>0){
-                    $('#listacolaboradoresMF').append(`<label class="form-label">Colaboradores</label><br></br>`)
-                }
-                response.forEach(function(text) {
-                    tarjetaActual[1].forEach(function(nombre){                        
-                        if(nombre==text){
-                            marked=true;                            
-                        }                        
-                    });   
-                    if(marked){
-                        $('#listacolaboradoresMF').append(`<input  checked="true" type="checkbox" id="${text}" name="listColabor[]" value="${text}"><label for="${text}">${text}</label><br>`);
-                        marked=false;
-                        return true;
-                    }else{
-                        $('#listacolaboradoresMF').append(`<input type="checkbox" id="${text}" name="listColabor[]" value="${text}"><label for="${text}">${text}</label><br>`);
-                    }                 
-                });
-            },
-            error: function(xhr, status, error) {
-                $('#result').html('<p>An error ocurred: ' + error + '</p>');
-            }
-        });
+        $('#idMF').val(tarjetaActual[0].tarjidunica);
+        $('#tarjtituloMF').val(tarjetaActual[0].tarjtitulo);
+        $('#primeroMF').val(tarjetaActual[0].tarjprimero);
+        $('#segundoMF').val(tarjetaActual[0].tarjsegundo);
+        $('#postreMF').val(tarjetaActual[0].tarjpostre);
+        $('#bebidasMF').val(tarjetaActual[0].tarjbebida);
         
     });
     $(document).on('click','#cancelarModif',function(){ // cancelar formulario modif
         $('#modalMaxi').css('display','flex');
         $('#modificacionTarjeta').css('display','none');
-        $('#estadoproyectoMF').empty();
-        $('#listacolaboradoresMF').empty();
     });
 
-    $('#formModif').submit(async function(e) {    // envio de formulario modificado
+    $('#formModif').submit(async function(e) {    // envio de formulario modificado (menus)
         e.preventDefault();
-        let nombreuser = $('#nombreuserMF').val();
-        let idunicaproyecto=$('#idunicaproyectoMF').val();
-        let estadoproyecto=$('#estadoproyectoMF  option:selected').val();
-        let nombreproyecto=$('#nombreproyectoMF').val();
-        let descrip=$('#descripMF').val();
-        let notasproyecto=$('#notasproyectoMF').val();
-        let fechacreacion=$('#fechacreacionMF').val();
-        let fechaultmod=$('#fechaultmodMF').val();
+        let idunica=$('#idMF').val();
+        let titulo=$('#tarjtituloMF').val();
+        let primero=$('#primeroMF').val();
+        let segundo=$('#segundoMF').val();
+        let postre=$('#postreMF').val();
+        let bebida=$('#bebidasMF').val();
 
         let colabs = new Set(); // para evitar un bug que me duplicaba los usuarios a veces y no desaparecia hasta recargar la pagina, tuve que eliminarlos a la fuerza con un set
         $('input[type="checkbox"]:checked').each(function() {
             colabs.add($(this).val());
         });
 
-        let uniqueColabs = Array.from(colabs);
-
-        let datos={
-            "nombreuser":nombreuser,
-            "idunicaproyecto":idunicaproyecto,
-            "estadoproyecto":estadoproyecto,
-            "nombreproyecto":nombreproyecto,
-            "descrip":descrip,
-            "notasproyecto":notasproyecto,
-            "fechacreacion":fechacreacion,
-            "fechaultmod":fechaultmod,
-            "colabs":uniqueColabs
-        }
+        //{"idvalue":"idvalueDeMenuACambiar","primero":"primerPlato","segundo":"segundoPlato","postre":"postre","bebida":"bebida","titulo":"descripcionDelMenu"}
         await $.ajax({    
             type: 'POST',
-            url: '../php/modificarTarjeta.php',
-            data: {"datos":datos},
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/modifMenu',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "idvalue": idunica,
+                "primero": primero,
+                "segundo": segundo,
+                "postre": postre,
+                "bebida": bebida,
+                "titulo": titulo
+            }),
             success: function(response) {
                 console.log(response);
             },
@@ -354,15 +175,12 @@ $(document).ready(async function(){
             }
         });
 
-        $('#nombreproyectoMF').val('');
-        $('#descripMF').val('');
-        $('#notasproyectoMF').val('');
-        $('#estadoproyectoMF').empty();
-        $('#fechacreacionMF').val('');
-        $('#fechaultmodMF').val('');
-        $('#listacolaboradoresMF').empty();
-        $('#nombreuserMF').val('');
-        $('#idunicaproyectoMF').val('');
+        $('#idMF').val('');
+        $('#tarjtituloMF').val('');
+        $('#primeroMF').val('');
+        $('#segundoMF').empty();
+        $('#postreMF').val('');
+        $('#bebidasMF').val('');
 
 
         $('#modalMaxi').css('display','flex');
@@ -413,7 +231,7 @@ $(document).ready(async function(){
         let segundo = $('#segundo').val();
         let postre = $('#postre').val();
         let bebida = $('#bebida').val();
-        console.log(titulo,primero,segundo,postre,bebida);
+        //console.log(titulo,primero,segundo,postre,bebida);
         e.preventDefault();
         $.ajax({
             type: 'POST',

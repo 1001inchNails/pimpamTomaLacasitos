@@ -131,21 +131,18 @@
     </div>
 </div>
 
-<!-- Modal tarjeta maximizada -->
+<!-- Modal tarjeta maximizada (menu)-->
 <div class="modal fade" id="tarjetaModal" tabindex="-1" role="dialog" aria-labelledby="tarjetaModalLabel" aria-hidden="true">
     <div id="modalMaxi" class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="tarjeta-detalle">
-                    <h4 id="nombreProyectoM"></h4>
-                    <p id="creadorM"></p>
-                    <p id="estadoproyectoM"></p>
-                    <p id="descripcionM"></p>
-                    <p id="notasProyectoM"></p>
-                    <p id="fechaCreacionM"></p>
-                    <p id="fechaUltimaModificacionM"></p>
-                    <p id="tagColabs">Colaboradores:</p>
-                    <div id="colaboradoresM"></div>
+                    <p id="idM"></p>
+                    <p id="tarjtituloM"></p>                    
+                    <p id="primeroM"></p>
+                    <p id="segundoM"></p>
+                    <p id="postreM"></p>
+                    <p id="bebidasM"></p>
                     <div id="botoneraMax">
                         <button id="modifTarj" type="button" class="btn btn-info">MODIFICAR</button>
                         <button id="deleteTarj" type="button" class="btn btn-danger">ELIMINAR</button>
@@ -166,43 +163,32 @@
                     <form id="formModif">
 
                         <div class="mb-3">
-                            <label for="nombreproyectoMF" class="form-label">Nombre del proyecto: </label>
-                            <input type="text" class="form-control" id="nombreproyectoMF" name="nombreproyectoMF" required>
+                            <input type="hidden" class="form-control" id="idMF" name="idMF" required>
                         </div>                        
                         <div class="mb-3">
-                            <label for="descripMF" class="form-label">Descripcion: </label>
-                            <input type="text" class="form-control" id="descripMF" name="descripMF" required>
+                            <label for="tarjtituloMF" class="form-label">Descripcion: </label>
+                            <input type="text" class="form-control" id="tarjtituloMF" name="tarjtituloMF" required>
                         </div>
                         <div class="mb-3">
-                            <label for="notasproyectoMF" class="form-label">Notas: </label>
-                            <input type="text" class="form-control" id="notasproyectoMF" name="notasproyectoMF" required>
+                            <label for="primeroMF" class="form-label">Primero: </label>
+                            <input type="text" class="form-control" id="primeroMF" name="primeroMF" required>
                         </div>
                         <div class="mb-3">
-                            <label for="estadoproyectoMF" class="form-label">Estado: </label>
-                            <select class="form-control" id="estadoproyectoMF" name="estadoproyectoMF" required></select>
+                            <label for="segundoMF" class="form-label">Segundo: </label>
+                            <input type="text" class="form-control" id="segundoMF" name="segundoMF" required>
                         </div>
                         <div class="mb-3">
-                            <label for="fechacreacionMF" class="form-label">Fecha de creacion: </label>
-                            <input type="text" class="form-control" id="fechacreacionMF" name="fechacreacionMF" required disabled>
+                            <label for="postreMF" class="form-label">Postre: </label>
+                            <input type="text" class="form-control" id="postreMF" name="postreMF" required>
                         </div>
                         <div class="mb-3">
-                            <label for="fechaultmodMF" class="form-label">Fecha de ultima modificacion: </label>                            
-                            <input type="text" class="form-control" id="fechaultmodMF" name="fechaultmodMF" required disabled>
+                            <label for="bebidasMF" class="form-label">Bebida: </label>                            
+                            <input type="text" class="form-control" id="bebidasMF" name="bebidasMF" required>
                         </div>
 
-                        <div id="listacolaboradoresMF" class="mb-3">
-                            
-                        </div>
-
-                        <div class="mb-3">
-                            <input type="hidden" class="form-control" id="nombreuserMF" name="nombreuserMF" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="hidden" class="form-control" id="idunicaproyectoMF" name="idunicaproyectoMF" required>
-                        </div>
                         <div id="buttmodifS">
                             <button id="cancelarModif" type="button" class="btn btn-warning w-50">CANCELAR</button>
-                        <button type="submit" class="btn btn-info w-50">MODIFICAR</button>
+                            <button type="submit" class="btn btn-info w-50">MODIFICAR</button>
                         </div>
                         
                     </form>
