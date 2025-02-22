@@ -114,6 +114,39 @@ $(document).ready(async function(){
         });
     }
 
+    async function cargarReservas() {
+        await $.ajax({    
+            type: 'GET',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/reservas',
+            data: '',
+            success: function(response) {
+                response = response.sort((a, b) => a.id - b.id);
+                //console.log(response);
+                let contadorTarj=0;
+                response.forEach(function(obj){
+                    $(`#contDone .contDones`).append(`
+                        <div id="reserva${contadorTarj}" class="tarjetaR">
+                        <input class="tarjidunicaR" type="hidden" name="tarjidunica" value="${obj.id}">
+                        <input class="horaReservaR" type="hidden" name="tarjidPedido" value="${obj.horaReserva}">
+                        <input class="tarjcodigoClientePersonalR" type="hidden" name="tarjcodigoClientePersonal" value="${obj.codigoClientePersonal}">
+                        <input class="tarjestadoR" type="hidden" name="tarjestado" value="${obj.estado}">
+                        <p name="tarjidunica">Id: ${obj.id}</p>
+                        <p name="estado">Estado: ${obj.estado}</p>
+                        </div>
+                        `);
+
+                    $(`#reserva${contadorTarj}`).addClass('fondo1');
+
+                    contadorTarj++;
+                });
+                contadorTarj=0;
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>Error: ' + error + '</p>');
+            }
+        });
+    }
+
     function borrarContenedor(tipo) { // vaciado de contenedores segun tipo
         $(`#cont${tipo} .cont${tipo}s`).empty();
     }
@@ -182,7 +215,7 @@ $(document).ready(async function(){
         $('#tarjetaModalH').modal('show');
     });
 
-    $(document).on('click', '.tarjetaP', function() { // para mostrar las tarjetas maximizadas (horas)
+    $(document).on('click', '.tarjetaP', function() { // para mostrar las tarjetas maximizadas (pedidos)
         $('#botoneraMaxP').css('display','flex');
         let tarjeta=$(this);    
         let datosTarjeta={
@@ -200,6 +233,26 @@ $(document).ready(async function(){
         tarjetaActual=[datosTarjeta];  // guardar datos de tarjeta actual para usar en el formulario de modificacion
 
         $('#tarjetaModalP').modal('show');
+    });
+
+    $(document).on('click', '.tarjetaR', function() { // para mostrar las tarjetas maximizadas (reservas)
+        $('#botoneraMaxR').css('display','flex');
+        let tarjeta=$(this);    
+        let datosTarjeta={
+            tarjidunicaR: tarjeta.find('.tarjidunicaR').attr('value'),
+            horaReservaR: tarjeta.find('.horaReservaR').attr('value'),
+            tarjcodigoClientePersonalR: tarjeta.find('.tarjcodigoClientePersonalR').attr('value'),
+            tarjestadoR: tarjeta.find('.tarjestadoR').attr('value')
+
+        };
+        $('#idMR').text('Id: ' + datosTarjeta.tarjidunicaR);
+        $('#horareservaMR').text('Hora deseada: : ' + datosTarjeta.horaReservaR);
+        $('#ccpMR').text('Codigo Cliente Personal: ' + datosTarjeta.tarjcodigoClientePersonalR);
+        $('#estadoMR').text('Estado: ' + datosTarjeta.tarjestadoR);
+
+        tarjetaActual=[datosTarjeta];  // guardar datos de tarjeta actual para usar en el formulario de modificacion
+
+        $('#tarjetaModalR').modal('show');
     });
 
     $(document).on('click', '#modifTarj',async function(){   // proceso de formulario de modificacion (tarjeta menus)
@@ -446,6 +499,117 @@ $(document).ready(async function(){
         mensaje("Pedido rechazado");
     });
 
+
+    $(document).on('click', '#modifTarjAcepR',async function(){
+        let idP = tarjetaActual[0].tarjidunicaR;
+
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/modEstado',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "coleccion": "reservas",
+                "idkey": "id",
+                "idvalue": idP,
+                "estadokey": "estado",
+                "estadovalue": "aceptado"
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/moverDocumento',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma y retorcida
+            data: JSON.stringify({
+                "idkey": "id",
+                "idvalue": idP,
+                "coleccOrigen": "reservas",
+                "coleccDestino": "historialReservas"
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        $('#tarjetaModalR').modal('hide');
+
+        borrarContenedor("Idea");
+        borrarContenedor("Todo");
+        borrarContenedor("Doing");
+        borrarContenedor("Done");
+        estadoBotonIdea=false;
+        estadoBotonTodo=false;  
+        estadoBotonDoing=false;
+        estadoBotonDone=false;
+        
+        mensaje("Reserva aceptado");
+
+    });
+
+
+    $(document).on('click','#modifTarjRechR', async function(){
+        let idP = tarjetaActual[0].tarjidunicaR;
+
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/modEstado',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "coleccion": "reservas",
+                "idkey": "id",
+                "idvalue": idP,
+                "estadokey": "estado",
+                "estadovalue": "rechazado"
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/moverDocumento',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma y retorcida
+            data: JSON.stringify({
+                "idkey": "id",
+                "idvalue": idP,
+                "coleccOrigen": "reservas",
+                "coleccDestino": "historialReservas"
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        $('#tarjetaModalR').modal('hide');
+
+        borrarContenedor("Idea");
+        borrarContenedor("Todo");
+        borrarContenedor("Doing");
+        borrarContenedor("Done");
+        estadoBotonIdea=false;
+        estadoBotonTodo=false;  
+        estadoBotonDoing=false;
+        estadoBotonDone=false;
+        
+        mensaje("Reserva rechazada");
+    });
+
     // CAMBIAR CUANDO EL LOGIN ESTE OPERATIVO
     /*
     async function updateNombreContSession(){   // devuelve nombre y contador
@@ -580,12 +744,12 @@ $(document).ready(async function(){
         
     });
 
-    $('#doneButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar tareas, estado done
+    $('#doneButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar reservas
         if(estadoBotonDone){
             borrarContenedor("Done");
             estadoBotonDone=false;
         }else{
-            cargarTarjetas("done","Done");
+            cargarReservas();
             estadoBotonDone=true;
         }
         

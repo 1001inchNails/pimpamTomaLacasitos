@@ -144,7 +144,7 @@
     html body div.container-fluid div.kanban-board div#contStat div.contStats div.colab p,html body div.container-fluid div.kanban-board div#contStat div.contStats div.propias p{
     font-size: 30px;
     }
-    .tarjeta, .tarjetaH, .tarjetaP{
+    .tarjeta, .tarjetaH, .tarjetaP, .tarjetaR{
     display: flex;
     flex-direction: column;
     font-size: 20px;
@@ -155,7 +155,7 @@
     cursor: pointer;
     transition: transform 0.3s ease;
     }
-    .tarjeta:hover,.tarjetaH:hover,.tarjetaP:hover{
+    .tarjeta:hover,.tarjetaH:hover,.tarjetaP:hover,.tarjetaR:hover{
     transform: scale(1.2);
     }
     #contIdea .contIdeas{
@@ -181,7 +181,7 @@
     #contDone .contDones{
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 20px;
     padding: 10px;
     }
  
@@ -243,12 +243,12 @@
     margin-bottom: 20px;
     flex-direction: column;
     }
-    #botoneraMax,#botoneraMaxH,#botoneraMaxP {
+    #botoneraMax,#botoneraMaxH,#botoneraMaxP,#botoneraMaxR {
     display: flex;
     justify-content: end;
     gap: 10px;
     }
-    #botoneraMax button, #botoneraMaxH button, #botoneraMaxP button  {
+    #botoneraMax button, #botoneraMaxH button, #botoneraMaxP button, #botoneraMaxR button  {
     border-radius: 5px;
     padding: 10px 20px;
     text-transform: uppercase;
@@ -394,6 +394,10 @@
         font-weight: normal;
         }
         html body.modal-open div#tarjetaModalP.modal.fade.show div#modalMaxiP.modal-dialog div.modal-content div.modal-body div.tarjeta-detalle p{
+            font-size: 25px;
+            font-weight: normal;
+            }
+        html body.modal-open div#tarjetaModalR.modal.fade.show div#modalMaxiR.modal-dialog div.modal-content div.modal-body div.tarjeta-detalle p{
             font-size: 25px;
             font-weight: normal;
             }

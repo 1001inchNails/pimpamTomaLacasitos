@@ -1,5 +1,10 @@
 
 reservas: mostrar, aceptar(borrar y mover a historial como aceptado, cambiuar estado de la hora a reservado) o cancelar (mover a historial como cancelado)
 
+boton toggle all y el resto de arriba
 
 historial: diferente seccion para pedidos y reservas (diferenciando entre aceptados y cancelados)
+
+
+
+cambiar url de cerrar sesion, controlar que esten bien el resto
