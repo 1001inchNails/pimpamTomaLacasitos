@@ -15,29 +15,6 @@ $(document).ready(async function(){
         $('#formNuevaIdea').find('input:text, input:hidden').val('');
     }
 
-    function checkearsiHayPropias(){    // chequea si el div para proyectos propios esta vacio
-        if ($('.contIdeas .propias').is(':empty')) {
-            $('.contIdeas .propias').css('display','none');
-        } else {
-            $('.contIdeas .propias').css('display','flex');
-        }
-        if ($('.contTodos .propias').is(':empty')) {
-            $('.contTodos .propias').css('display','none');
-        } else {
-            $('.contTodos .propias').css('display','flex');
-        }
-        if ($('.contDoings .propias').is(':empty')) {
-            $('.contDoings .propias').css('display','none');
-        } else {
-            $('.contDoings .propias').css('display','flex');
-        }
-        if ($('.contDones .propias').is(':empty')) {
-            $('.contDones .propias').css('display','none');
-        } else {
-            $('.contDones .propias').css('display','flex');
-        }
-    }
-
     async function cargarMenus() {
         await $.ajax({    
             type: 'GET',
@@ -93,6 +70,39 @@ $(document).ready(async function(){
                         `);
 
                     $(`#hora${contadorTarj}`).addClass('fondo1');
+
+                    contadorTarj++;
+                });
+                contadorTarj=0;
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>Error: ' + error + '</p>');
+            }
+        });
+    }
+
+    async function cargarPedidos() {
+        await $.ajax({    
+            type: 'GET',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/pedidos',
+            data: '',
+            success: function(response) {
+                response = response.sort((a, b) => a.id - b.id);
+                //console.log(response);
+                let contadorTarj=0;
+                response.forEach(function(obj){
+                    $(`#contDoing .contDoings`).append(`
+                        <div id="pedido${contadorTarj}" class="tarjetaP">
+                        <input class="tarjidunicaP" type="hidden" name="tarjidunica" value="${obj.id}">
+                        <input class="tarjidPedidoP" type="hidden" name="tarjidPedido" value="${obj.idPedido}">
+                        <input class="tarjcodigoClientePersonalP" type="hidden" name="tarjcodigoClientePersonal" value="${obj.codigoClientePersonal}">
+                        <input class="tarjestadoP" type="hidden" name="tarjestado" value="${obj.estado}">
+                        <p name="tarjidunica">Id: ${obj.id}</p>
+                        <p name="estado">Estado: ${obj.estado}</p>
+                        </div>
+                        `);
+
+                    $(`#pedido${contadorTarj}`).addClass('fondo1');
 
                     contadorTarj++;
                 });
@@ -170,6 +180,26 @@ $(document).ready(async function(){
         tarjetaActual=[datosTarjeta];  // guardar datos de tarjeta actual para usar en el formulario de modificacion
 
         $('#tarjetaModalH').modal('show');
+    });
+
+    $(document).on('click', '.tarjetaP', function() { // para mostrar las tarjetas maximizadas (horas)
+        $('#botoneraMaxP').css('display','flex');
+        let tarjeta=$(this);    
+        let datosTarjeta={
+            tarjidunicaP: tarjeta.find('.tarjidunicaP').attr('value'),
+            tarjidPedidoP: tarjeta.find('.tarjidPedidoP').attr('value'),
+            tarjcodigoClientePersonalP: tarjeta.find('.tarjcodigoClientePersonalP').attr('value'),
+            tarjestadoP: tarjeta.find('.tarjestadoP').attr('value')
+
+        };
+        $('#idMP').text('Id: ' + datosTarjeta.tarjidunicaP);
+        $('#idpedidoMP').text('Id del menu deseado: : ' + datosTarjeta.tarjidPedidoP);
+        $('#ccpMP').text('Codigo Cliente Personal: ' + datosTarjeta.tarjcodigoClientePersonalP);
+        $('#estadoMP').text('Estado: ' + datosTarjeta.tarjestadoP);
+
+        tarjetaActual=[datosTarjeta];  // guardar datos de tarjeta actual para usar en el formulario de modificacion
+
+        $('#tarjetaModalP').modal('show');
     });
 
     $(document).on('click', '#modifTarj',async function(){   // proceso de formulario de modificacion (tarjeta menus)
@@ -307,6 +337,114 @@ $(document).ready(async function(){
         mensaje("Tarjeta modificada");
     });
 
+    $(document).on('click', '#modifTarjAcepP',async function(){
+        let idP = tarjetaActual[0].tarjidunicaP;
+
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/modEstado',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "coleccion": "pedidos",
+                "idkey": "id",
+                "idvalue": idP,
+                "estadokey": "estado",
+                "estadovalue": "aceptado"
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/moverDocumento',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma y retorcida
+            data: JSON.stringify({
+                "idkey": "id",
+                "idvalue": idP,
+                "coleccOrigen": "pedidos",
+                "coleccDestino": "historialPedidos"
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        $('#tarjetaModalP').modal('hide');
+
+        borrarContenedor("Idea");
+        borrarContenedor("Todo");
+        borrarContenedor("Doing");
+        borrarContenedor("Done");
+        estadoBotonIdea=false;
+        estadoBotonTodo=false;  
+        estadoBotonDoing=false;
+        estadoBotonDone=false;
+        
+        mensaje("Pedido aceptado");
+
+    });
+
+    $(document).on('click', '#modifTarjRechP',async function(){
+        let idP = tarjetaActual[0].tarjidunicaP;
+
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/modEstado',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "coleccion": "pedidos",
+                "idkey": "id",
+                "idvalue": idP,
+                "estadokey": "estado",
+                "estadovalue": "rechazado"
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/moverDocumento',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma y retorcida
+            data: JSON.stringify({
+                "idkey": "id",
+                "idvalue": idP,
+                "coleccOrigen": "pedidos",
+                "coleccDestino": "historialPedidos"
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        $('#tarjetaModalP').modal('hide');
+
+        borrarContenedor("Idea");
+        borrarContenedor("Todo");
+        borrarContenedor("Doing");
+        borrarContenedor("Done");
+        estadoBotonIdea=false;
+        estadoBotonTodo=false;  
+        estadoBotonDoing=false;
+        estadoBotonDone=false;
+        
+        mensaje("Pedido rechazado");
+    });
 
     // CAMBIAR CUANDO EL LOGIN ESTE OPERATIVO
     /*
@@ -431,12 +569,12 @@ $(document).ready(async function(){
         
     });
 
-    $('#doingButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar tareas, estado doing
+    $('#doingButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar pedidos
         if(estadoBotonDoing){
             borrarContenedor("Doing");
             estadoBotonDoing=false;
         }else{
-            cargarTarjetas("doing","Doing");
+            cargarPedidos();
             estadoBotonDoing=true;
         }
         

@@ -51,10 +51,7 @@
             <div>
                <button id="doingButt" type="button" class="btn btn-primary">PEDIDOS</button> 
             </div>
-            <div class="contDoings">
-                <div class="propias"></div>
-                <div class="colab"></div>
-            </div>
+            <div class="contDoings"></div>
 
         </div>
 
@@ -63,10 +60,7 @@
             <div>
                 <button id="doneButt" type="button" class="btn btn-primary">RESERVAS</button>
             </div>
-            <div class="contDones">
-                <div class="propias"></div>
-                <div class="colab"></div>
-            </div>
+            <div class="contDones"></div>
 
         </div>
 
@@ -127,7 +121,7 @@
     </div>
 </div>
 
-<!-- Modal tarjeta maximizada (menu)-->
+<!-- Modal tarjetas maximizada-->
 <div class="modal fade" id="tarjetaModal" tabindex="-1" role="dialog" aria-labelledby="tarjetaModalLabel" aria-hidden="true">
     <div id="modalMaxi" class="modal-dialog" role="document">
         <div class="modal-content">
@@ -242,6 +236,26 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" id="tarjetaModalP" tabindex="-1" role="dialog" aria-labelledby="tarjetaModalLabel" aria-hidden="true">
+    <div id="modalMaxiP" class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="tarjeta-detalle">
+                    <p id="idMP"></p>
+                    <p id="idpedidoMP"></p>
+                    <p id="ccpMP"></p>                    
+                    <p id="estadoMP"></p>
+                    <div id="botoneraMaxP">
+                        <button id="modifTarjAcepP" type="button" class="btn btn-info">ACEPTAR</button>
+                        <button id="modifTarjRechP" type="button" class="btn btn-danger">RECHAZAR</button>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

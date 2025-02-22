@@ -1,5 +1,4 @@
 
-pedidos: mostrar, aceptar(borrar y mover a historial como aceptado) o cancelar (mover a historial como cancelado)
 reservas: mostrar, aceptar(borrar y mover a historial como aceptado, cambiuar estado de la hora a reservado) o cancelar (mover a historial como cancelado)
 
 
