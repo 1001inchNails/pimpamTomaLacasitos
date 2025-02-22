@@ -144,7 +144,7 @@
     html body div.container-fluid div.kanban-board div#contStat div.contStats div.colab p,html body div.container-fluid div.kanban-board div#contStat div.contStats div.propias p{
     font-size: 30px;
     }
-    .tarjeta{
+    .tarjeta, .tarjetaH{
     display: flex;
     flex-direction: column;
     font-size: 20px;
@@ -155,7 +155,7 @@
     cursor: pointer;
     transition: transform 0.3s ease;
     }
-    .tarjeta:hover{
+    .tarjeta:hover,.tarjetaH:hover{
     transform: scale(1.2);
     }
     #contIdea .contIdeas{
@@ -165,42 +165,26 @@
     padding: 10px;
     }
 
-    #contTodo .contTodos .propias{
+    #contTodo .contTodos{
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 10px;
     }
-    #contTodo .contTodos .colab{
+
+    #contDoing .contDoings{
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 10px;
     }
-    #contDoing .contDoings .propias{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 10px;
-    }
-    #contDoing .contDoings .colab{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 10px;
-    }
-    #contDone .contDones .propias{
+    #contDone .contDones{
     display: flex;
     flex-direction: column;
     gap: 5px;
     padding: 10px;
     }
-    #contDone .contDones .colab{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 10px;
-    }
+ 
     #ideaButt,#todoButt,#doingButt,#doneButt{
     width: 100%;
     padding: 10px;
@@ -259,12 +243,12 @@
     margin-bottom: 20px;
     flex-direction: column;
     }
-    #botoneraMax {
+    #botoneraMax,#botoneraMaxH {
     display: flex;
     justify-content: end;
     gap: 10px;
     }
-    #botoneraMax button {
+    #botoneraMax button, #botoneraMaxH button {
     border-radius: 5px;
     padding: 10px 20px;
     text-transform: uppercase;
@@ -276,7 +260,7 @@
     #deleteTarj:hover {
     background-color: #6d1f27;
     }
-    #modificacionTarjeta{
+    #modificacionTarjeta,#modificacionTarjetaH{
     display: none;
     flex-direction: column;
     }
@@ -298,6 +282,11 @@
     justify-content: center;
     align-items: center;
     }
+    html body.modal-open div#tarjetaModal.modal.fade.show div#modificacionTarjetaH div.modal-dialog div#contModifFull.modal-content div.modal-header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
     #fechacreacionMF,#fechaultmodMF{
     background-color: rgb(214, 208, 208);
     }
@@ -391,6 +380,11 @@
     font-size: 25px;
     font-weight: normal;
     }
+
+    html body.modal-open div#tarjetaModalH.modal.fade.show div#modalMaxiH.modal-dialog div.modal-content div.modal-body div.tarjeta-detalle p{
+        font-size: 25px;
+        font-weight: normal;
+        }
     #estadoproyectoMF{
         background-color: #c1c8e7;
     }

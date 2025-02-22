@@ -38,7 +38,7 @@ $(document).ready(async function(){
         }
     }
 
-    async function cargarMenus() {   // carga de tarjetas segun tipo
+    async function cargarMenus() {
         await $.ajax({    
             type: 'GET',
             url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/menus',
@@ -61,6 +61,38 @@ $(document).ready(async function(){
                         `);
 
                     $(`#menu${contadorTarj}`).addClass('fondo1');
+
+                    contadorTarj++;
+                });
+                contadorTarj=0;
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>Error: ' + error + '</p>');
+            }
+        });
+    }
+
+    async function cargarHorasReserva() {
+        await $.ajax({    
+            type: 'GET',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/horastodas',
+            data: '',
+            success: function(response) {
+                response = response.sort((a, b) => a.id - b.id);
+                //console.log(response);
+                let contadorTarj=0;
+                response.forEach(function(obj){
+                    $(`#contTodo .contTodos`).append(`
+                        <div id="hora${contadorTarj}" class="tarjetaH">
+                        <input class="tarjidunicaH" type="hidden" name="tarjidunica" value="${obj.id}">
+                        <input class="tarjhoraH" type="hidden" name="hora" value="${obj.hora}">
+                        <input class="tarjestadoH" type="hidden" name="estado" value="${obj.estado}">
+                        <p name="tarjidunica">Id: ${obj.id}</p>
+                        <p name="estado">Estado: ${obj.estado}</p>
+                        </div>
+                        `);
+
+                    $(`#hora${contadorTarj}`).addClass('fondo1');
 
                     contadorTarj++;
                 });
@@ -98,7 +130,7 @@ $(document).ready(async function(){
     let idActualProyecto;
 
     $(document).on('click', '.tarjeta', function() { // para mostrar las tarjetas maximizadas (menus)
-        $('#botoneraMax').css('display','flex');    // por defecto, oculto
+        $('#botoneraMax').css('display','flex');
         let tarjeta=$(this);    
         let datosTarjeta={
             tarjidunica: tarjeta.find('.tarjidunica').attr('value'),
@@ -122,6 +154,24 @@ $(document).ready(async function(){
         $('#tarjetaModal').modal('show');
     });
 
+    $(document).on('click', '.tarjetaH', function() { // para mostrar las tarjetas maximizadas (horas)
+        $('#botoneraMaxH').css('display','flex');
+        let tarjeta=$(this);    
+        let datosTarjeta={
+            tarjidunicaH: tarjeta.find('.tarjidunicaH').attr('value'),
+            tarjhora: tarjeta.find('.tarjhoraH').attr('value'),
+            tarjestado: tarjeta.find('.tarjestadoH').attr('value')
+
+        };
+        $('#idMH').text('Id: ' + datosTarjeta.tarjidunicaH);
+        $('#horaMH').text('Hora: : ' + datosTarjeta.tarjhora);
+        $('#estadoMH').text('Estado: ' + datosTarjeta.tarjestado);
+
+        tarjetaActual=[datosTarjeta];  // guardar datos de tarjeta actual para usar en el formulario de modificacion
+
+        $('#tarjetaModalH').modal('show');
+    });
+
     $(document).on('click', '#modifTarj',async function(){   // proceso de formulario de modificacion (tarjeta menus)
         $('#modalMaxi').css('display','none');
         $('#modificacionTarjeta').css('display','flex');
@@ -135,9 +185,27 @@ $(document).ready(async function(){
         $('#bebidasMF').val(tarjetaActual[0].tarjbebida);
         
     });
-    $(document).on('click','#cancelarModif',function(){ // cancelar formulario modif
-        $('#modalMaxi').css('display','flex');
-        $('#modificacionTarjeta').css('display','none');
+
+
+    $(document).on('click', '#modifTarjH',async function(){   // proceso de formulario de modificacion (tarjeta horas)
+        $('#modalMaxiH').css('display','none');
+        $('#modificacionTarjetaH').css('display','flex');
+
+        
+        $('#idMFH').val(tarjetaActual[0].tarjidunicaH);
+        $('#estadoproyectoMFH').append($('<option>', {
+            value: 'reservado',
+            text: 'Reservado'
+        }));
+        $('#estadoproyectoMFH').append($('<option>', {
+            value: 'disponible',
+            text: 'Disponible'
+        }));
+
+    });
+    $(document).on('click','#cancelarModifH',function(){ // cancelar formulario modif
+        $('#modalMaxiH').css('display','flex');
+        $('#modificacionTarjetaH').css('display','none');
     });
 
     $('#formModif').submit(async function(e) {    // envio de formulario modificado (menus)
@@ -148,11 +216,6 @@ $(document).ready(async function(){
         let segundo=$('#segundoMF').val();
         let postre=$('#postreMF').val();
         let bebida=$('#bebidasMF').val();
-
-        let colabs = new Set(); // para evitar un bug que me duplicaba los usuarios a veces y no desaparecia hasta recargar la pagina, tuve que eliminarlos a la fuerza con un set
-        $('input[type="checkbox"]:checked').each(function() {
-            colabs.add($(this).val());
-        });
 
         //{"idvalue":"idvalueDeMenuACambiar","primero":"primerPlato","segundo":"segundoPlato","postre":"postre","bebida":"bebida","titulo":"descripcionDelMenu"}
         await $.ajax({    
@@ -198,6 +261,52 @@ $(document).ready(async function(){
         
         mensaje("Tarjeta modificada");
     });
+
+    $('#formModifH').submit(async function(e) {    // envio de formulario modificado (horas)
+        e.preventDefault();
+        let idunica=$('#idMFH').val();
+        let estadoproyectoMFH=$('#estadoproyectoMFH  option:selected').val();
+
+        //{"coleccion":"nombreDeColeccion","idkey":"nombreCampoId","idvalue":"valorDeId","estadokey":"nombreCampoEstado","estadovalue":"valorDeNuevoEstado"}
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/modEstado',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "coleccion": "horasDeReserva",
+                "idkey": "id",
+                "idvalue": idunica,
+                "estadokey": "estado",
+                "estadovalue": estadoproyectoMFH
+            }),
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr, status, error) {
+                $('#result').html('<p>An error ocurred: ' + error + '</p>');
+            }
+        });
+
+        $('#idMFH').val('');
+        $('#estadoproyectoMFH').empty();
+
+
+        $('#modalMaxiH').css('display','flex');
+        $('#modificacionTarjetaH').css('display','none');
+        $('#tarjetaModalH').modal('hide');
+
+        borrarContenedor("Idea");
+        borrarContenedor("Todo");
+        borrarContenedor("Doing");
+        borrarContenedor("Done");
+        estadoBotonIdea=false;
+        estadoBotonTodo=false;  
+        estadoBotonDoing=false;
+        estadoBotonDone=false;
+        
+        mensaje("Tarjeta modificada");
+    });
+
 
     // CAMBIAR CUANDO EL LOGIN ESTE OPERATIVO
     /*
@@ -265,13 +374,18 @@ $(document).ready(async function(){
             }
         });
     });
-    
-    $('#deleteTarj').on('click', async function(){  // borrado de tarjeta
-        let idP=idActualProyecto;
+    //{"idkey":"nombreCampoId","idvalue":"valorDeId","coleccOrigen":"nombreColeccOriginal","coleccDestino":"nombreColeccDestino"}
+    $('#deleteTarj').on('click', async function(){  // borrado de tarjeta (menu)
         await $.ajax({    
             type: 'POST',
-            url: '../php/exterminatus.php',
-            data: {"datos":idP},
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/moverDocumento',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma y retorcida
+            data: JSON.stringify({
+                "idkey": "id",
+                "idvalue": idActualProyecto,
+                "coleccOrigen": "menus",
+                "coleccDestino": "historialMenus"
+            }),
             success: function(response) {
                 console.log(response);
                 $('#tarjetaModal').modal('hide');
@@ -283,7 +397,7 @@ $(document).ready(async function(){
                 estadoBotonTodo=false;  
                 estadoBotonDoing=false;
                 estadoBotonDone=false;
-                if(response=="YESYESYES"){
+                if(response.mensaje=="Documento trasladado correctamente"){
                     mensaje("Tarjeta eliminada");
                 }else{
                     mensaje("Fallo al eliminar tarjeta");
@@ -295,7 +409,7 @@ $(document).ready(async function(){
         });
     });
     
-    $('#ideaButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar tareas, estado idea
+    $('#ideaButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar menus
         if(estadoBotonIdea){
             borrarContenedor("Idea");
             estadoBotonIdea=false;
@@ -306,12 +420,12 @@ $(document).ready(async function(){
         
     });
 
-    $('#todoButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar tareas, estado to do
+    $('#todoButt').on('click',async function(){ // funcionalidad toggle para boton de mostrar horas de reserva
         if(estadoBotonTodo){
             borrarContenedor("Todo");
             estadoBotonTodo=false;
         }else{
-            cargarTarjetas("todo","Todo");
+            cargarHorasReserva();
             estadoBotonTodo=true;
         }
         
