@@ -1,18 +1,19 @@
+
 body{
     margin: 0;
     padding: 0;
     height: 100vh;
     background-color: #f9f9f9;
-    font-family: 'Merriweather', serif; /* Para los párrafos */
+    font-family: 'Merriweather', serif;
 }
 
 h1, h2, h3 {
     font-family: 'Playfair Display', serif;
    
-    text-transform: uppercase; /* Esto da un toque de elegancia */
+    text-transform: uppercase; 
 }
 
-/* Texto normal */
+
 p, li {
     font-family: 'Merriweather', serif;
 }
@@ -55,7 +56,7 @@ p, li {
 .boton .admin-btn {
     font-weight: bold;
     border: none;
-    background-color: #8c7d6d; /* Color de fondo inicial */
+    background-color: #8c7d6d; 
     color: #fff;
     padding: 10px 25px;
     font-size: 1.1rem;
@@ -67,14 +68,14 @@ p, li {
 }
 
 .boton .admin-btn:hover {
-    background-color: #ffffff; /* Cambio de color de fondo al pasar el mouse */
-    color: #8c7d6d; /* Cambiar el color del texto para que sea más legible */
-    transform: scale(1.05); /* Le da un ligero aumento al pasar el mouse */
+    background-color: #ffffff; 
+    color: #8c7d6d; 
+    transform: scale(1.05);
 }
 
 .boton .admin-btn:active {
-    background-color: #a88f68; /* Color de fondo cuando se presiona */
-    transform: scale(0.98); /* Le da un pequeño efecto de reducción al hacer clic */
+    background-color: #a88f68; 
+    transform: scale(0.98);
 }
 
 
@@ -82,7 +83,7 @@ p, li {
     background-image: url("../img/restaurante.png");
     background-size: cover;
     background-position: center;
-    height: 50vh; /* Más altura para un toque de elegancia */
+    height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -304,5 +305,216 @@ p, li {
 .modal form button:active {
     background-color: #a88f68; /* Color cuando el botón es presionado */
 }
+
+
+
+/*FORMU PEDIDOS PAGINA*/
+.Pmenus {
+    background-image: url("../img/menu.png");
+    background-size: cover;
+    background-position: center;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #f5f5f5; /* Un blanco suave */
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+/* Capa oscura para resaltar el texto */
+.Pmenus::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+
+.Pmenus h2 {
+    font-size: 50px;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 3px;
+    z-index: 1; /*para que se vea*/
+    text-transform: uppercase;
+}
+
+.Pmenus p {
+    font-size: 20px;
+    margin-top: 12px;
+    font-style: italic;
+    font-weight: 300;
+    z-index: 1;
+    letter-spacing: 4px;
+}
+
+
+/*FORMU MENUS*/
+
+
+/* Estilo del formulario */
+.formulario-menu {
+    background-color: #1a1a1a; /* Fondo negro */
+    padding: 40px;
+    border-radius: 15px;
+    width: 30%; /* Ajusta según tu diseño */
+    margin: 50px auto; /* Agregado margen superior */
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+}
+
+/* Título del formulario */
+.formulario-menu h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #f5f5f5;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+
+.formulario-menu div {
+    margin-bottom: 20px;
+}
+
+/* Estilo para las etiquetas */
+.formulario-menu label {
+    font-size: 1rem;
+    color: #ffffff; /* Detalles dorados */
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* Estilo para los campos de texto */
+.formulario-menu input, .formulario-menu select {
+    padding: 12px;
+    border: 2px solid #c5b299; /* Borde dorado */
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #333; /* Fondo oscuro para inputs */
+    color: white; /* Texto blanco */
+    width: 90%;
+    margin-top: 5px;
+}
+
+
+
+/* Estilo para el botón */
+.formulario-menu button {
+    font-weight: bold;
+    padding: 12px 30px;
+    background-color: #967048; /* Dorado oscuro */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.formulario-menu button:hover {
+    transform: scale(1.05);
+}
+
+.formulario-menu button:active {
+    background-color: #a7793d; /* Cuando se hace clic */
+    transform: scale(0.98);
+}
+
+/*BOTON LISTA MENUS*/
+
+.Pmenus .Lista-menus {
+    z-index: 999;
+    background-color: #c5b299; 
+    color: #ffffff; /* Blanco */
+    font-size: 1.2rem;
+    padding: 12px 30px;
+    border: 2px solid #c5b299; /* Borde dorado */
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+
+.Pmenus .Lista-menus:hover {
+    background-color: #000000; /* Dorado más fuerte */
+    color: #c5b299; /* Texto negro */
+    border-color: #c5b299; /* Borde blanco */
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+
+/*estilo menus*/
+.listaDeMenus {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.tarjeta-menu {
+    background-color: #fdfdfd; /* Fondo blanco suave */
+    color: #1a1a1a;
+    border: 2px solid #d4af37; /* Borde dorado */
+    border-radius: 12px;
+    padding: 25px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Detalle dorado en la parte superior */
+.tarjeta-menu::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #d4af37, #f8e29b); 
+}
+
+.tarjeta-menu h3 {
+    font-size: 1.8rem;
+    color: #d4af37; /* Dorado */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.tarjeta-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tarjeta-menu li {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.5);
+}
+
+.tarjeta-menu li:last-child {
+    border-bottom: none;
+}
+
+.tarjeta-menu:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 
 

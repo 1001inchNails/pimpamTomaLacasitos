@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400&display=swap"
+        rel="stylesheet">
 
 </head>
+
 <body>
     <nav class="menu">
         <section class="logo">
@@ -16,19 +20,101 @@
         <section class="paginas">
             <a href="clientPedidos.html">Pedidos</a>
             <a href="clientReservas.html">Reservas</a>
+
+
             <section class="boton">
-                <a href="admin.html" class="admin-btn">Admin</a>
+                <button class="admin-btn">Admin</button>
             </section>
         </section>
     </nav>
-    
 
-    <section class="bienvenida">
 
-        <h2>BIENVENIDO A AURUM</h2>
-        <p>Donde la gastronomía se convierte en una experiencia única.</p>
+    <section class="Pmenus">
+
+        <p>Descubre nuestro menú con platos deliciosos y llenos de sabor.</p>
+        <button class="Lista-menus">Menus</button>
+    </section>
+
+    <section class="formulario-menu cosita">
+        <form method="POST">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div>
+                <label for="menu">Selecciona tu menú:</label>
+                <select id="menu" name="menu">
+                    <option value="menu1">Menú 1</option>
+                    <option value="menu2">Menú 2</option>
+                    <option value="menu3">Menú 3</option>
+                </select>
+            </div>
+
+            <div>
+                <button type="submit">Enviar</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="listaDeMenus">
+        <section class="tarjeta-menu">
+            <h3>Menú 1</h3>
+            <ul>
+                <li><strong>Primero:</strong> Ensalada César</li>
+                <li><strong>Segundo:</strong> Solomillo a la parrilla</li>
+                <li><strong>Bebida:</strong> Vino tinto</li>
+                <li><strong>Postre:</strong> Tiramisú</li>
+            </ul>
+
+
+        </section>
+        <section class="tarjeta-menu">
+            <h3>Menú 1</h3>
+            <ul>
+                <li><strong>Primero:</strong> Ensalada César</li>
+                <li><strong>Segundo:</strong> Solomillo a la parrilla</li>
+                <li><strong>Bebida:</strong> Vino tinto</li>
+                <li><strong>Postre:</strong> Tiramisú</li>
+            </ul>
+
+
+        </section>
+        <section class="tarjeta-menu">
+            <h3>Menú 1</h3>
+            <ul>
+                <li><strong>Primero:</strong> Ensalada César</li>
+                <li><strong>Segundo:</strong> Solomillo a la parrilla</li>
+                <li><strong>Bebida:</strong> Vino tinto</li>
+                <li><strong>Postre:</strong> Tiramisú</li>
+            </ul>
+
+
+        </section>
+        
 
     </section>
-    
+
+
+
+
+
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <section class="toto">
+                <button id="closeBtn" class="close">&times;</button>
+            </section>
+            <h2>Acceso Admin</h2>
+            <form>
+                <input type="text" placeholder="Nombre de usuario" required>
+                <input type="password" placeholder="Contraseña" required>
+                <button type="submit">Iniciar sesión</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/js.js"></script>
 </body>
+
 </html>

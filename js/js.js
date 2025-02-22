@@ -8,4 +8,14 @@ $(document).ready(function() {
     $("#closeBtn").click(function() {
         $("#adminModal").fadeOut(); // Oculta el modal con una animación
     });
+
+
+    $(document).ready(function () {
+        $(".listaDeMenus").hide(); // Oculta las tarjetas al inicio
+    
+        $(".Lista-menus").click(function () {
+            $(".listaDeMenus").slideToggle(300); // Muestra/Oculta con animación
+        });
+    });
+    
 });
