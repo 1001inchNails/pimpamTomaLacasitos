@@ -54,6 +54,7 @@ p, li {
 
 /* Estilo para el botón de Admin */
 .boton .admin-btn {
+    cursor: pointer;
     font-weight: bold;
     border: none;
     background-color: #8c7d6d; 
