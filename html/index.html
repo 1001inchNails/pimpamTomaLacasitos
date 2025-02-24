@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>AURUM</title>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400&display=swap"rel="stylesheet">
 
@@ -26,6 +26,12 @@
         </section>
     </nav>
 
+    <div id="contenedorMensaje">
+        <form id="formMensaje">
+            <p id="mensaje"></p>
+            <button id="contMens">Continuar</button>
+        </form>
+    </div>
 
     <section class="bienvenida">
 
@@ -37,7 +43,7 @@
 
     
     <section class="menu-restaurante" id="menu">
-        <h3>Nuestro Menú</h3>
+        <h3>Nuestras especialidades</h3>
         <section class="platos">
             <section class="plato">
                 <img src="../img/carne.jpg" alt="Filete Wagyu">
@@ -80,9 +86,9 @@
                 <button id="closeBtn" class="close">&times;</button>
             </section>
             <h2>Acceso Admin</h2>
-            <form>
-                <input type="text" placeholder="Nombre de usuario" required>
-                <input type="password" placeholder="Contraseña" required>
+            <form id="adminCheckM">
+                <input id="inputNombre" type="text" placeholder="Nombre de usuario" required>
+                <input id="inputPassword" type="password" placeholder="Contraseña" required>
                 <button type="submit">Iniciar sesión</button>
             </form>
         </div>

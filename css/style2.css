@@ -54,7 +54,6 @@ p, li {
 
 /* Estilo para el botón de Admin */
 .boton .admin-btn {
-    cursor: pointer;
     font-weight: bold;
     border: none;
     background-color: #8c7d6d; 
@@ -221,7 +220,7 @@ p, li {
 .modal {
     display: none; 
     position: fixed;
-    z-index: 999;
+    z-index: 99999!important;
     top: 30%;
     left: 35%;
     width: 100%;
@@ -427,7 +426,7 @@ p, li {
 /*BOTON LISTA MENUS*/
 
 .Pmenus .Lista-menus {
-    z-index: 999;
+    z-index: 1;
     background-color: #c5b299; 
     color: #ffffff; /* Blanco */
     font-size: 1.2rem;
@@ -458,6 +457,7 @@ p, li {
     flex-wrap: wrap;
     gap: 40px;
     margin-top: 30px;
+    padding-bottom: 100px;
 }
 
 .tarjeta-menu {
@@ -544,7 +544,6 @@ p, li {
     z-index: 1;
     letter-spacing: 3px;
 }
-
 
  /*Modal mensaje*/
  #contenedorMensaje{

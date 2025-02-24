@@ -1,5 +1,27 @@
-$(document).ready(function() {
+$(document).ready(async function() {
 
+    await $.ajax({    
+        type: 'GET',
+        url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/horas',
+        data: '',
+        success: function(response) {
+            //console.log(response);
+            response.forEach(function(obj){
+                
+                $('#horas').append($('<option>', {
+                    value: obj.id,
+                    text: obj.hora
+                }));
+
+            });
+        },
+        error: function(xhr, status, error) {
+            $('#result').html('<p>Error: ' + error + '</p>');
+        }
+    });
+
+
+    
 
     function mensaje(texto){     // funcion mensaje aviso
         $('#contenedorMensaje').fadeIn();
@@ -32,6 +54,31 @@ $(document).ready(function() {
         });
         
     });
+
+
+
+    $('#enviarReserva').submit(async function(e) {
+        e.preventDefault();
+        let horaReserva=$('#horas').val();
+        let codigoClientePersonal=$('#nombre').val();
+
+        //{"horaReserva":"idDeHoraReservaDeseada","codigoClientePersonal":"valorCCP"}
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/nuevaReserva',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "horaReserva": horaReserva,
+                "codigoClientePersonal": codigoClientePersonal
+            }),
+            success: function(response) {
+                console.log(response);
+            }
+        });
+        
+        mensaje("Reserva solicitada");
+    });
+
 
     // Al hacer clic en el botón "Admin", se muestra el modal
     $(".admin-btn").click(function() {
