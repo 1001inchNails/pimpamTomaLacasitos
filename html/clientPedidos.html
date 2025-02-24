@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>AURUM</title>
+    <link rel="stylesheet" href="../css/style2.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400&display=swap"
         rel="stylesheet">
@@ -28,6 +28,12 @@
         </section>
     </nav>
 
+    <div id="contenedorMensaje">
+        <form id="formMensaje">
+            <p id="mensaje"></p>
+            <button id="contMens">Continuar</button>
+        </form>
+    </div>
 
     <section class="Pmenus">
 
@@ -36,19 +42,15 @@
     </section>
 
     <section class="formulario-menu cosita">
-        <form method="POST">
+        <form id="enviarNuevoPedido">
             <div>
-                <label for="nombre">Nombre:</label>
+                <label for="nombre">Codigo Cliente Personal:</label>
                 <input type="text" id="nombre" name="nombre" required>
             </div>
 
             <div>
                 <label for="menu">Selecciona tu menú:</label>
-                <select id="menu" name="menu">
-                    <option value="menu1">Menú 1</option>
-                    <option value="menu2">Menú 2</option>
-                    <option value="menu3">Menú 3</option>
-                </select>
+                <select id="menu" name="menu"></select>
             </div>
 
             <div>
@@ -58,45 +60,6 @@
     </section>
 
     <section class="listaDeMenus">
-        <section class="tarjeta-menu">
-            <h3>Menú 1</h3>
-            <ul>
-                <li><strong>Primero:</strong> Ensalada César</li>
-                <li><strong>Segundo:</strong> Solomillo a la parrilla</li>
-                <li><strong>Bebida:</strong> Vino tinto</li>
-                <li><strong>Postre:</strong> Tiramisú</li>
-            </ul>
-
-
-        </section>
-        <section class="tarjeta-menu">
-            <h3>Menú 2</h3>
-            <ul>
-                <li><strong>Primero:</strong> Ensalada César</li>
-                <li><strong>Segundo:</strong> Solomillo a la parrilla</li>
-                <li><strong>Bebida:</strong> Vino tinto</li>
-                <li><strong>Postre:</strong> Tiramisú</li>
-            </ul>
-
-
-        </section>
-        <section class="tarjeta-menu">
-            <h3>Menú </h3>
-            <ul>
-                <li><strong>Primero:</strong> Ensalada César</li>
-                <li><strong>Segundo:</strong> Solomillo a la parrilla</li>
-                <li><strong>Bebida:</strong> Vino tinto</li>
-                <li><strong>Postre:</strong> Tiramisú</li>
-            </ul>
-
-
-        </section>
-        
-
-    </section>
-
-
-
 
 
     <div id="adminModal" class="modal">
@@ -114,7 +77,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../js/js.js"></script>
+    <script src="../js/clientPedidos.js"></script>
 </body>
 
 </html>
