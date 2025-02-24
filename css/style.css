@@ -543,3 +543,66 @@ p, li {
     z-index: 1;
     letter-spacing: 3px;
 }
+
+
+ /*Modal mensaje*/
+ #contenedorMensaje{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow-y: hidden;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 9999!important;
+    }
+    #formMensaje{
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    z-index: 999999!important;
+    background-color: #1a1a1a;
+  padding: 40px;
+  border-radius: 15px;
+  margin: 50px auto;
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+    }
+    
+    #contMens{
+        font-weight: bold;
+        padding: 12px 30px;
+        background-color: #967048;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    #mensaje{
+    font-size: 20px;
+    font-weight: bolder;
+    color: white;
+    }
+    #contMens:hover{
+    cursor: pointer;
+    background-color: #a7793d; /* Cambia a un dorado suave al pasar el mouse */
+    transform: scale(1.02); /* Ligeramente agrandado cuando se pasa el mouse */
+    }
+    
+    #contMens:active {
+        background-color: #a88f68; /* Color cuando el botón es presionado */
+    }

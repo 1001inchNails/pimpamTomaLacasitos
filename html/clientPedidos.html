@@ -38,7 +38,7 @@
     <section class="Pmenus">
 
         <p>Descubre nuestro menú con platos deliciosos y llenos de sabor.</p>
-        <button class="Lista-menus">Menus</button>
+        <button id="buttMenus" class="Lista-menus">Menus</button>
     </section>
 
     <section class="formulario-menu cosita">
@@ -59,7 +59,7 @@
         </form>
     </section>
 
-    <section class="listaDeMenus">
+    <section class="listaDeMenus"></section>
 
 
     <div id="adminModal" class="modal">
@@ -68,9 +68,9 @@
                 <button id="closeBtn" class="close">&times;</button>
             </section>
             <h2>Acceso Admin</h2>
-            <form>
-                <input type="text" placeholder="Nombre de usuario" required>
-                <input type="password" placeholder="Contraseña" required>
+            <form id="adminCheckM">
+                <input id="inputNombre" type="text" placeholder="Nombre de usuario" required>
+                <input id="inputPassword" type="password" placeholder="Contraseña" required>
                 <button type="submit">Iniciar sesión</button>
             </form>
         </div>

@@ -220,7 +220,7 @@ p, li {
 .modal {
     display: none; 
     position: fixed;
-    z-index: 999;
+    z-index: 99999!important;
     top: 30%;
     left: 35%;
     width: 100%;
@@ -426,7 +426,7 @@ p, li {
 /*BOTON LISTA MENUS*/
 
 .Pmenus .Lista-menus {
-    z-index: 999;
+    z-index: 1;
     background-color: #c5b299; 
     color: #ffffff; /* Blanco */
     font-size: 1.2rem;
