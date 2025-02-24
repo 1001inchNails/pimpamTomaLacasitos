@@ -574,11 +574,11 @@ p, li {
     gap: 20px;
     z-index: 999999!important;
     background-color: #1a1a1a;
-  padding: 40px;
-  border-radius: 15px;
-  margin: 50px auto;
-  font-family: 'Playfair Display', serif;
-  text-align: center;
+    padding: 40px;
+    border-radius: 15px;
+    margin: 50px auto;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
     }
     
     #contMens{
