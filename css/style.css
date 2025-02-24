@@ -9,7 +9,6 @@ body{
 
 h1, h2, h3 {
     font-family: 'Playfair Display', serif;
-   
     text-transform: uppercase; 
 }
 
@@ -17,6 +16,7 @@ h1, h2, h3 {
 p, li {
     font-family: 'Merriweather', serif;
 }
+
 /* Estilo base para el menú */
 .menu {
     display: flex;
@@ -218,12 +218,13 @@ p, li {
 
    /* Estilo general para el modal */
 .modal {
-    display: none; /* Modal oculto por defecto */
+    display: none; 
     position: fixed;
     z-index: 999;
     top: 30%;
-    left: 40%;
+    left: 35%;
     width: 100%;
+
 }
 
 /* Estilo del contenido del modal */
@@ -231,7 +232,7 @@ p, li {
     background-color: #1a1a1a;
     margin: 0;
     padding: 30px;
-    border: none;
+    border: 3px solid  #be9e73;
     width: 25%;
     border-radius: 15px; /* Bordes redondeados para un toque más lujoso */
     font-family: 'Playfair Display', serif; /* Fuente elegante */
@@ -421,10 +422,6 @@ p, li {
     transform: scale(1.05);
 }
 
-.formulario-menu button:active {
-    background-color: #a7793d; /* Cuando se hace clic */
-    transform: scale(0.98);
-}
 
 /*BOTON LISTA MENUS*/
 
@@ -518,3 +515,31 @@ p, li {
 
 
 
+/*Paginas Reservas*/
+.Preservas{
+    background-image: url("../img/reserva.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #f5f5f5; /* Un blanco suave */
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.Preservas{
+    font-size: 20px;
+}
+
+.Preservas p {
+    font-size: 20px;
+    margin-top: 12px;
+    font-style: italic;
+    font-weight: 300;
+    z-index: 1;
+    letter-spacing: 3px;
+}
