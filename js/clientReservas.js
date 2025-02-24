@@ -2,26 +2,15 @@ $(document).ready(async function() {
 
     await $.ajax({    
         type: 'GET',
-        url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/menus',
+        url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/horas',
         data: '',
         success: function(response) {
             //console.log(response);
             response.forEach(function(obj){
-                $(`.listaDeMenus`).append(`
-                    <section class="tarjeta-menu">
-                        <h3>Menú ${obj.id}</h3>
-                        <ul>
-                            <li><strong>Menu:</strong>${obj.titulo}</li>
-                            <li><strong>Primero:</strong>${obj.primero}</li>
-                            <li><strong>Segundo:</strong>${obj.segundo}</li>
-                            <li><strong>Bebida:</strong>${obj.bebida}</li>
-                            <li><strong>Postre:</strong>${obj.postre}</li>
-                        </ul>
-                    </section>
-                    `);
-                $('#menu').append($('<option>', {
+                
+                $('#horas').append($('<option>', {
                     value: obj.id,
-                    text: obj.titulo
+                    text: obj.hora
                 }));
 
             });
@@ -32,7 +21,32 @@ $(document).ready(async function() {
     });
 
 
+    function mensaje(texto){     // funcion mensaje aviso
+        $('#contenedorMensaje').fadeIn();
+        $('#mensaje').text(texto);        
+    }
 
+    $('#enviarReserva').submit(async function(e) {
+        e.preventDefault();
+        let horaReserva=$('#horas').val();
+        let codigoClientePersonal=$('#nombre').val();
+
+        //{"horaReserva":"idDeHoraReservaDeseada","codigoClientePersonal":"valorCCP"}
+        await $.ajax({    
+            type: 'POST',
+            url: 'https://pimpam-toma-lacasitos-api.vercel.app/api/nuevaReserva',
+            contentType: 'application/json', // Especifica que el contenido es JSON porque AJAX es el producto de una mente enferma
+            data: JSON.stringify({
+                "horaReserva": horaReserva,
+                "codigoClientePersonal": codigoClientePersonal
+            }),
+            success: function(response) {
+                console.log(response);
+            }
+        });
+        
+        mensaje("Reserva solicitada");
+    });
 
 
     // Al hacer clic en el botón "Admin", se muestra el modal
