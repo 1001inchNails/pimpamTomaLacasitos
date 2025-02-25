@@ -1,0 +1,2 @@
+
+cambiar url de cerrar sesion, controlar que esten bien el resto

@@ -1,0 +1,31 @@
+usuarios pueden hacer pedidos
+los admin los veremos, los rechazamos o aceptamos
+
+reservas: usuario elige mesa y numero comensales.
+admin: ve, rechaza o acepta.
+
+menú para hacer  reservas y pedidos
+
+
+hacer api con mongo
+
+
+landing, crear pedidos, reservar mesa
+
+
+
+bbdd:
+colección menus: objeto menus
+colección reservas: horas disponibles
+colección pedidosDeComida: almacena pedidos entrantes, pendientes de autorizar. tendrá el paquete que quiera el cliente y estado aceptado o noprint("hello againx2")
+colección reservasDeHora:  almacena reservas entrantes, pendientes de aceptar. Si se acepta, cambia el estado en la bbdd reservas a ocupado con el nombre del cliente y borra la petición.
+
+landing cliente:
+formulario pedidos(llamada api para productos menu)
+formulario reservas(llamada api con horas disponibles) (desde la vista admin se autoriza o no la reserva, si se autoriza la hora cambia de estado a reservada)
+
+pagina admin:
+botón para mostrar un modal con pedidos de menus pendientes, con un botón para aceptar o cancelar (llamada api a colección pedidosDeComida)
+botón para mostrar un modal con rerservas pendientes, , con un botón para aceptar o cancelar (llamada api a colección reservasDeHora)
+
+
