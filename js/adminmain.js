@@ -375,6 +375,11 @@ $(document).ready(async function(){
         }));
 
     });
+
+    $(document).on('click','#cancelarModif',function(){ // cancelar formulario modif
+        $('#modalMaxi').css('display','flex');
+        $('#modificacionTarjeta').css('display','none');
+    });
     $(document).on('click','#cancelarModifH',function(){ // cancelar formulario modif
         $('#modalMaxiH').css('display','flex');
         $('#modificacionTarjetaH').css('display','none');
