@@ -2,7 +2,8 @@
     "version": 2,
     "builds": [
       {
-        "src": "html/index.html"
+        "src": "html/index.html",
+        "use": "@vercel/node"
       }
     ]
   }
