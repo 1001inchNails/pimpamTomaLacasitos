@@ -1,6 +1,0 @@
-modal
-
-
-npm install dotenv.env
-
-escribo el paquete dotenv
