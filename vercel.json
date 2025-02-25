@@ -1,9 +1,9 @@
 {
     "version": 2,
-    "builds": [
-      {
-        "src": "html/index.html",
-        "use": "@vercel/node"
-      }
+    "root": "./",
+    "trailingSlash": true,
+    "cleanUrls": true,
+    "routes": [
+      {"src": "/(.*)", "dest": "/html/$1"}
     ]
   }
