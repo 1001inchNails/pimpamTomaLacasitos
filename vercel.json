@@ -5,6 +5,11 @@
         "src": "html/index.html",
         "use": "@vercel/static"
       }
+    ],
+    "rewrites": [
+      {
+        "src": "/(.*)",
+        "destination": "html/index.html"
+      }
     ]
-
   }
